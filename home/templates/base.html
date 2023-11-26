@@ -5,9 +5,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Sende Sat - {% block title %} {% endblock title %}</title>
+    <title>{{ setting.title }} - {% block title %} {% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+    <meta name="description" content="{% block description %} {{ setting.description }} {% endblock description %}">
+    <meta name="keywords" content="{% block keywords %} {{ setting.keywords }} {% endblock keywords %}">
     <meta name="author" content="">
     <!--Less styles -->
     <!-- Other Less css file //different less files has different color scheam
@@ -27,7 +28,7 @@
     <!-- Google-code-prettify -->
     <link href="{% static 'themes/js/google-code-prettify/prettify.css' %}" rel="stylesheet" />
     <!-- fav and touch icons -->
-    <link rel="shortcut icon" href="{% static 'themes/images/ico/favicon.ico' %}">
+    <link rel="shortcut icon" href="{{ setting.icon.url }}">
     <link rel="apple-touch-icon-precomposed" sizes="144x144"
         href="{% static 'themes/images/ico/apple-touch-icon-144-precomposed.png' %}">
     <link rel="apple-touch-icon-precomposed" sizes="114x114"
