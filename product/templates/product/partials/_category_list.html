@@ -1,0 +1,16 @@
+{% load static %}
+{% load mptt_tags %}
+
+<ul id="sideManu" class="nav nav-tabs nav-stacked">
+    {% recursetree categories %}
+    <li class="subMenu open">
+        <a href="#">{{node.title}} [{{ node.product_set.get_queryset.count }}]</a>
+        
+        {% if not node.is_leaf_node %}
+        <ul>
+            <li><a href="#">{{ children }}</a></li>
+        </ul>
+        {% endif %}
+    </li>
+    {% endrecursetree %}
+</ul>
