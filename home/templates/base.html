@@ -51,9 +51,28 @@
     {% endblock slider %}
 
 
-    {% block content %}
-    
-    {% endblock content %}
+    <div id="mainBody">
+        <div class="container">
+            <div class="row">
+
+                {% block sidebar %}
+                    {% include "partials/_sidebar.html" %}
+                {% endblock sidebar %}
+                
+                <div class="span9">
+                    
+                    {% block breadcrumb %}
+                        {% include "partials/_breadcrumb.html" %}
+                    {% endblock breadcrumb %}
+
+                    {% block content %}
+                    
+                    {% endblock content %}
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     
     {% block footer %}
