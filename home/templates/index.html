@@ -5,19 +5,11 @@
 	{% include "partials/_slider.html" %}
 {% endblock slider %}
 
-{% block content %}
-<div id="mainBody">
-	<div class="container">
-		<div class="row">
+{% block breadcrumb %}
 
-			{% include "partials/_sidebar.html" %}
-			
-			<div class="span9">		
-				{% include "partials/_featured_products.html" %}
-					
-				{% include "partials/_latest_products.html" %}
-			</div>
-		</div>
-	</div>
-</div>
+{% endblock breadcrumb %}
+
+{% block content %}
+	{% include "partials/_featured_products.html" %}
+	{% include "partials/_latest_products.html" %}
 {% endblock content %}

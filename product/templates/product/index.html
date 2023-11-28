@@ -2,16 +2,6 @@
 {% load static %}
 
 {% block content %}
-<div id="mainBody">
-	<div class="container">
-	<div class="row">
-
-        {% include "partials/_sidebar.html" %}
-        
-	<div class="span9">
-
-    {% include "partials/_breadcrumb.html" %}
-
 	<h3> Products Name <small class="pull-right"> 40 products are available </small></h3>	
 	<hr class="soft"/>
 	<p>
@@ -38,34 +28,7 @@
 <div class="tab-content">
 	<div class="tab-pane" id="listView">
         {% for prd in products %}
-		<div class="row">	  
-			<div class="span2">
-				<img src="{{ prd.image.url }}" alt="{{ prd.title }}"/>
-			</div>
-			<div class="span4">
-                {% if prd in latest_products %}
-				<h3>New | Available</h3>
-				<hr class="soft"/>
-                {% endif %}				
-				<h5>{{ prd.title }}</h5>
-				<p>{{ prd.description }}</p>
-				<a class="btn btn-small pull-right" href="product_details.html">İncele</a>
-				<br class="clr"/>
-			</div>
-			<div class="span3 alignR">
-			<form class="form-horizontal qtyFrm">
-			<h3>{{ prd.price|floatformat:2 }}</h3>
-			<label class="checkbox">
-				<input type="checkbox">Karşılaştır
-			</label><br/>
-			
-			  <a href="product_details.html" class="btn btn-large btn-primary"> Ekle <i class=" icon-shopping-cart"></i></a>
-			  <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
-			
-				</form>
-			</div>
-		</div>
-		<hr class="soft"/>
+			{% include "product/partials/_product_list.html" %}
         {% endfor %}
 	</div>
 
@@ -79,7 +42,7 @@
 	</div>
 </div>
 
-	<a href="compair.html" class="btn btn-large pull-right">Compair Product</a>
+	<a href="compair.html" class="btn btn-large pull-right">Ürünleri Karşılaştır</a>
 	<div class="pagination">
 			<ul>
 			<li><a href="#">&lsaquo;</a></li>
@@ -92,9 +55,4 @@
 			</ul>
 			</div>
 			<br class="clr"/>
-</div>
-</div>
-</div>
-</div>
-<!-- MainBody End ============================= -->
 {% endblock content %}
