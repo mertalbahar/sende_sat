@@ -6,8 +6,8 @@ def category(request):
 
 
 def latest_products(request):
-    return{'latest_products': Product.objects.order_by('-id')[:6]}
+    return {'latest_products': Product.objects.order_by('-id')[:6]}
 
 
 def featured_products(request):
-    return{'featured_products': Product.objects.order_by('?')[:16]}
+    return {'featured_products': Product.objects.order_by('?')[:16]}

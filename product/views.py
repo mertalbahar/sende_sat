@@ -1,11 +1,21 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from .models import Category, Product, ProductImages
 
 
 def index(request):
     products = Product.objects.all()
-    return render(request, 'product/index.html', {'products': products})
+    paginator = Paginator(products, 6)
+    page = request.GET.get('page', 1)
+    page_obj = paginator.page(page)
+    
+    context = {
+        'products': products,
+        'page_obj': page_obj
+    }
+
+    return render(request, 'product/index.html', context)
 
 
 def product_detail(request, c_slug, p_slug):
@@ -32,9 +42,14 @@ def category_products(request, c_slug):
     for i in children:
         a = list(Product.objects.filter(category__slug = i.slug))
         products.extend(a)
+        
+    paginator = Paginator(products, 6)
+    page = request.GET.get('page', 1)
+    page_obj = paginator.page(page)
     
     context = {
-        'products': products
+        'products': products,
+        'page_obj': page_obj
     }
     
     return render(request, 'product/index.html', context)
