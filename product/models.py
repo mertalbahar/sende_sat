@@ -68,7 +68,7 @@ class Product(models.Model):
         return self.title
     
     def get_ablosute_url(self):
-        return reverse('productsUrl', kwargs={'slug': self.slug})
+        return reverse('products_url', kwargs={'slug': self.slug})
         
     def category_tag(sef):
         return sef.category

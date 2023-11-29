@@ -15,11 +15,11 @@
                                 {% if prd in latest_products %}
                                 <i class="tag"></i>
                                 {% endif %}
-                                <a href="{% url 'product_detail' prd.slug %}"><img src="{{ prd.image.url }}" style="height: 120px;" alt="{{ prd.title }}"></a>
+                                <a href="{% url 'product_detail' prd.category.slug prd.slug %}"><img src="{{ prd.image.url }}" style="height: 120px;" alt="{{ prd.title }}"></a>
                                 <div class="caption">
                                     <h5>{{ prd.title|truncatechars:20 }}</h5>
                                     <h4>
-                                        <a class="btn" href="{% url 'product_detail' prd.slug %}">İncele</a>
+                                        <a class="btn" href="{% url 'product_detail' prd.category.slug prd.slug %}">İncele</a>
                                         <span class="pull-right">{{ prd.price|floatformat:2 }}</span>
                                     </h4>
                                 </div>
