@@ -9,7 +9,7 @@
         {% endif %}				
         <h5>{{ prd.title }}</h5>
         <p>{{ prd.description }}</p>
-        <a class="btn btn-small pull-right" href="{% url 'product_detail' prd.slug %}">İncele</a>
+        <a class="btn btn-small pull-right" href="{% url 'product_detail' prd.category.slug prd.slug %}">İncele</a>
         <br class="clr"/>
     </div>
     <div class="span3 alignR">
@@ -19,8 +19,8 @@
         <input type="checkbox">Karşılaştır
     </label><br/>
     
-      <a href="{% url 'product_detail' prd.slug %}" class="btn btn-large btn-primary"> Ekle <i class=" icon-shopping-cart"></i></a>
-      <a href="{% url 'product_detail' prd.slug %}" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+      <a href="{% url 'product_detail' prd.category.slug prd.slug %}" class="btn btn-large btn-primary"> Ekle <i class=" icon-shopping-cart"></i></a>
+      <a href="{% url 'product_detail' prd.category.slug prd.slug %}" class="btn btn-large"><i class="icon-zoom-in"></i></a>
     
         </form>
     </div>
