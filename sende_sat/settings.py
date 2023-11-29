@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'mptt',
     'home',
     'product',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,6 @@ CKEDITOR_CONFIGS = {
 
 
 USE_THOUSAND_SEPARATOR = True
+
+
+LOGIN_URL = '/user/login'
