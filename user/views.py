@@ -10,8 +10,8 @@ def index(request):
 
 
 def user_login(request):
-    if request.user.is_authenticated and 'next' in request.GET:
-        return render(request, 'user/login.html', {'error': 'Yetkiniz yok.'})
+    if request.user.is_authenticated:
+        return redirect('home')
     
     if request.method == 'POST':
         form = UserLoginForm(request, data = request.POST)
@@ -23,16 +23,16 @@ def user_login(request):
             
             if user is not None:
                 login(request, user)
-                messages.success(request, 'Başarılı bir şekilde oturum açtınız.')
+                messages.add_message(request, messages.SUCCESS, 'Başarılı bir şekilde oturum açtınız.')
                 next_url = request.GET.get('next', None)
                 
                 if next_url is None:
-                    return redirect('home')
+                    return redirect('/')
                 else:
                     return redirect(next_url)
                 
             else:
-                return render(request, 'home', {'form': form})
+                return render(request, 'user/login.html', {'form': form})
             
         else:
             return render(request, 'user/login.html', {'form': form})
@@ -40,3 +40,10 @@ def user_login(request):
     else:
         form = UserLoginForm()
         return render(request, 'user/login.html', {'form': form})
+    
+
+def user_logout(request):
+    messages.add_message(request, messages.SUCCESS, 'Başarılı bir şekilde çıkış yaptınız.')
+    logout(request)
+    
+    return redirect('/')
