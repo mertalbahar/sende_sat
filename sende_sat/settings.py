@@ -58,6 +58,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'home.context_processors.setting',
+                'home.context_processors.page',
                 'product.context_processors.category',
                 'product.context_processors.latest_products',
                 'product.context_processors.featured_products',
