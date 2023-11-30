@@ -2,13 +2,13 @@ from django.db import transaction
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 
 from .models import UserProfile
-from .forms import UserLoginForm, UserProfileForm, UserRegisterForm, UserUpdateForm
+from .forms import UserLoginForm, UserPasswordChangeForm, UserProfileForm, UserRegisterForm, UserUpdateForm
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -124,4 +124,24 @@ def user_update(request):
     }
     
     return render(request, 'user/update.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def user_password_change(request):
+    if request.method == 'POST':
+        form = UserPasswordChangeForm(request.user, request.POST)
+        
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.add_message(request, messages.SUCCESS, 'Parola güncellendi.')
             
+            return redirect('user_profile')
+        
+        else:
+            return render(request, 'user/password_change.html', {'form': form})
+        
+    else:
+        form = UserPasswordChangeForm(request.user)
+        
+        return render(request, 'user/password_change.html', {'form': form})
