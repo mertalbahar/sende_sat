@@ -17,6 +17,8 @@ def page(request):
         '/user/login': 'kullanıcı Girişi',
         '/user/register': 'kullanıcı Kayıt',
         '/user/update': 'profil Güncelleme',
+        '/order/': 'Siparişler',
+        '/order/cart': 'Sepet',
     }
     
     print(f'Page Length: {len(page)}, Page List: {page}')
