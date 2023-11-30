@@ -1,8 +1,10 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.core.validators import validate_email
 
-from .forms import UserLoginForm
+from .forms import UserLoginForm, UserRegisterForm
 
 
 def index(request):
@@ -47,3 +49,39 @@ def user_logout(request):
     logout(request)
     
     return redirect('/')
+
+
+def user_register(request):
+    if 'emailcheck' in request.POST:
+        email = request.POST.get('emailcheck')
+    
+        try:
+            validate_email(email)
+            
+            if User.objects.filter(email = email).exists():
+                messages.add_message(request, messages.ERROR, 'Email daha önce kullanılmış.')
+                return redirect('user_login')
+                
+        except:
+            messages.add_message(request, messages.ERROR, 'Lütfen geçerli bir email giriniz.')
+            return redirect('user_login')
+    
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username = username, password = password)
+            login(request, user)
+            messages.add_message(request, messages.SUCCESS, 'Başarılı şekilde kayıt oldunuz.')
+            
+            return redirect('/')
+        
+        else:
+            return render(request, 'user/register.html', {'form': form})
+    
+    else:
+        form = UserRegisterForm()
+        return render(request, 'user/register.html', {'form': form})
