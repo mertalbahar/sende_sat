@@ -4,7 +4,7 @@
 	<div class="container">
 	<div id="welcomeLine" class="row">
 		{% if user.is_authenticated %}
-		<div class="span6">Hoşgeldiniz! <strong>{{ user.username }}</strong></div>
+		<div class="span6">Hoşgeldiniz! <a href="{% url 'user_profile' %}"><strong>{{ user.username }}</strong></a></div>
 		{% else %}
 		<div class="span6">Merhaba!<strong> Ziyaretçi</strong></div>
 		{% endif %}

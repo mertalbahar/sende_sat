@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h3>[{{ user.username }}] Profil Güncelleme</h3>
+<div class="well">
+	<form class="form-horizontal" method="POST">
+		{% csrf_token %}
+
+		{% for field in user_form %}
+        <div class="control-group {% if field.errors %}invalid{% endif %}">
+            {% if field.errors %}
+            <div class="alert alert-danger">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+            <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+            <div class="controls">
+                {{ field }}
+            </div>
+        </div>
+        {% endfor %}
+
+        {% for field in user_profile_form %}
+        <div class="control-group {% if field.errors %}invalid{% endif %}">
+            {% if field.errors %}
+            <div class="alert alert-danger">
+                {{ field.errors }}
+            </div>
+            {% endif %}
+            <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+            <div class="controls">
+                {{ field }}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="btn-group" style="display: flex; justify-content: end">
+            <button type="submit" class="btn btn-success">Güncelle</button>
+        </div>
+	</form>
+</div>
+<!-- MainBody End ============================= -->
+{% endblock content %}
