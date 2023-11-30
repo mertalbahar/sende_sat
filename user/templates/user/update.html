@@ -3,42 +3,50 @@
 
 {% block content %}
 <h3>[{{ user.username }}] Profil Güncelleme</h3>
-<div class="well">
-	<form class="form-horizontal" method="POST">
-		{% csrf_token %}
+<hr class="soft" />
 
-		{% for field in user_form %}
-        <div class="control-group {% if field.errors %}invalid{% endif %}">
-            {% if field.errors %}
-            <div class="alert alert-danger">
-                {{ field.errors }}
-            </div>
-            {% endif %}
-            <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
-            <div class="controls">
-                {{ field }}
-            </div>
-        </div>
-        {% endfor %}
+<div class="row">
+    <div class="span1"> &nbsp;</div>
+	<div class="span7">
+        <div class="well">
+            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
 
-        {% for field in user_profile_form %}
-        <div class="control-group {% if field.errors %}invalid{% endif %}">
-            {% if field.errors %}
-            <div class="alert alert-danger">
-                {{ field.errors }}
-            </div>
-            {% endif %}
-            <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
-            <div class="controls">
-                {{ field }}
-            </div>
-        </div>
-        {% endfor %}
+                {% for field in user_form %}
+                <div class="control-group {% if field.errors %}invalid{% endif %}">
+                    {% if field.errors %}
+                    <div class="alert alert-danger">
+                        {{ field.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+                    <div class="controls">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
 
-        <div class="btn-group" style="display: flex; justify-content: end">
-            <button type="submit" class="btn btn-success">Güncelle</button>
+                {% for field in user_profile_form %}
+                <div class="control-group {% if field.errors %}invalid{% endif %}">
+                    {% if field.errors %}
+                    <div class="alert alert-danger">
+                        {{ field.errors }}
+                    </div>
+                    {% endif %}
+                    <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+                    <div class="controls">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="btn-group" style="display: flex; justify-content: space-between">
+                    <a href="{{request.META.HTTP_REFERER|escape}}" class="btn">Geri Dön</a>
+                    <button type="submit" class="btn btn-success">Güncelle</button>
+                </div>
+            </form>
         </div>
-	</form>
+    </div>
 </div>
 <!-- MainBody End ============================= -->
 {% endblock content %}

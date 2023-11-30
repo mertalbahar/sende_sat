@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import widgets
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
 from .models import UserProfile
@@ -61,8 +61,16 @@ class UserProfileForm(forms.ModelForm):
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['phone'].widget = widgets.TextInput(attrs={'class': 'form-control', 'placeholder': ''})
+        self.fields['phone'].widget = widgets.TextInput(attrs={'class': 'form-control'})
         self.fields['address'].widget = widgets.TextInput(attrs={'class': 'form-control'})
         self.fields['city'].widget = widgets.Select(choices=CITY, attrs={'class': 'form-control'})
         self.fields['country'].widget = widgets.TextInput(attrs={'class': 'form-control'})
         self.fields['image'].widget = widgets.FileInput(attrs={'class': 'form-control'})
+        
+        
+class UserPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].widget = widgets.PasswordInput(attrs={'class': 'form-control'})
+        self.fields['new_password1'].widget = widgets.PasswordInput(attrs={'class': 'form-control'})
+        self.fields['new_password2'].widget = widgets.PasswordInput(attrs={'class': 'form-control'})
