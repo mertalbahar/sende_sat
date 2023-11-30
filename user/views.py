@@ -1,14 +1,27 @@
+from django.db import transaction
 from django.shortcuts import redirect, render
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 
-from .forms import UserLoginForm, UserRegisterForm
+from .models import UserProfile
+from .forms import UserLoginForm, UserProfileForm, UserRegisterForm, UserUpdateForm
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def index(request):
-    return render(request, 'user/index.html')
+    user = User.objects.get(id = request.user.id)
+    profile = UserProfile.objects.get(user_id = request.user.id)
+    
+    context = {
+        'user': user,
+        'profile': profile
+    }
+    
+    return render(request, 'user/index.html', context)
 
 
 def user_login(request):
@@ -85,3 +98,30 @@ def user_register(request):
     else:
         form = UserRegisterForm()
         return render(request, 'user/register.html', {'form': form})
+
+
+@login_required(login_url=settings.LOGIN_URL)
+@transaction.atomic
+def user_update(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance = request.user)
+        user_profile_form = UserProfileForm(request.POST, request.FILES, instance = request.user.userprofile)
+        
+        if user_form.is_valid() and user_profile_form.is_valid():
+            user_form.save( )
+            user_profile_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Profiliniz güncellendi.')
+            
+            return redirect('user_profile')
+        
+    else:
+        user_form = UserUpdateForm(instance = request.user)
+        user_profile_form = UserProfileForm(instance = request.user.userprofile)
+        
+    context = {
+        'user_form': user_form,
+        'user_profile_form': user_profile_form
+    }
+    
+    return render(request, 'user/update.html', context)
+            

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h3> Registration</h3>
+<h3> Kayıt İşlemleri</h3>
 <div class="well">
 	<form class="form-horizontal" method="POST">
 		{% csrf_token %}
@@ -11,12 +11,8 @@
 
 		<p><sup>*</sup>Zorunlu alanlar</p>
 
-		<div class="control-group">
-			<div class="controls">
-				<input type="hidden" name="email_create" value="1">
-				<input type="hidden" name="is_new_customer" value="1">
-				<input class="btn btn-large btn-success" type="submit" value="Kayıt Ol" />
-			</div>
+		<div class="btn-group">
+			<input class="btn btn-large btn-success" type="submit" value="Kayıt Ol" />
 		</div>
 	</form>
 </div>

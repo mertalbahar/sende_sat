@@ -2,5 +2,60 @@
 {% load static %}
 
 {% block content %}
-<h1>user homepage</h1>
+<h3> Profilim</h3>
+<hr class="soft" />
+
+<div class="row">
+    <div class="span9">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>Profil Resmi</th>
+                <td>
+                    {% if profile.image %}
+                    <img src="{{ profile.image.url }}" alt="{{ user.username }}" style="width: 50px;">
+                    {% else %}
+                    <img src="{% static 'user/img/user.png' %}" alt="" style="width: 50px;">
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Kullanıcı Adı</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>İsim</th>
+                <td>{{ user.first_name }}</td>
+            </tr>
+            <tr>
+                <th>Soyisim</th>
+                <td>{{ user.last_name }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Telefon</th>
+                <td>{{ profile.phone }}</td>
+            </tr>
+            <tr>
+                <th>Adres</th>
+                <td>{{ profile.address }}</td>
+            </tr>
+            <tr>
+                <th>Şehir</th>
+                <td>{{ profile.city }}</td>
+            </tr>
+            <tr>
+                <th>Ülke</th>
+                <td>{{ profile.country }}</td>
+            </tr>
+        </table>
+        <div class="btn-group" style="display: flex; justify-content: space-between">
+            <a href="{% url 'user_update' %}" class="btn">Profili Güncelle</a>
+            <a href="" class="btn">Şifre Değiştir</a>
+        </div>
+    </div>
+</div>
+<!-- MainBody End ============================= -->
 {% endblock content %}
