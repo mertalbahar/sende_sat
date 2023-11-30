@@ -19,7 +19,7 @@
         <input type="checkbox">Karşılaştır
     </label><br/>
     
-      <a href="{% url 'product_detail' prd.category.slug prd.slug %}" class="btn btn-large btn-primary"> Ekle <i class=" icon-shopping-cart"></i></a>
+      <a href="{% url 'add_cart' prd.id%}" class="btn btn-large btn-primary"> Ekle <i class=" icon-shopping-cart"></i></a>
       <a href="{% url 'product_detail' prd.category.slug prd.slug %}" class="btn btn-large"><i class="icon-zoom-in"></i></a>
     
         </form>

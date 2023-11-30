@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'home',
     'product',
     'user',
+    'order',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +65,7 @@ TEMPLATES = [
                 'product.context_processors.category',
                 'product.context_processors.latest_products',
                 'product.context_processors.featured_products',
+                'order.context_processors.cart_total',
             ],
         },
     },

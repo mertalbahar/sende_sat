@@ -2,9 +2,11 @@
 
 <!-- Sidebar ================================================== -->
 <div id="sidebar" class="span3">
-    <div class="well well-small"><a id="myCart" href="product_summary.html"><img
-                src="{% static 'themes/images/ico-cart.png' %}" alt="cart">3 Items in your cart <span
-                class="badge badge-warning pull-right">$155.00</span></a></div>
+    <div class="well well-small">
+        <a id="myCart" href="{% url 'cart' %}">
+            <img src="{% static 'themes/images/ico-cart.png' %}" alt="cart">{% if request.session.cart_items %}{{ request.session.cart_items }}{% else %}0{% endif %} Ürün <span class="badge badge-warning pull-right">{{ total|floatformat:2 }}</span>
+        </a>
+    </div>
 
     {% include "product/partials/_category_list.html" %}
 
@@ -15,7 +17,8 @@
             <h5>Panasonic</h5>
             <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a>
                 <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary"
-                    href="#">$222.00</a></h4>
+                    href="#">$222.00</a>
+            </h4>
         </div>
     </div><br />
     <div class="thumbnail">
@@ -24,7 +27,8 @@
             <h5>Kindle</h5>
             <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a>
                 <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary"
-                    href="#">$222.00</a></h4>
+                    href="#">$222.00</a>
+            </h4>
         </div>
     </div><br />
     <div class="thumbnail">
