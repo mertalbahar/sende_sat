@@ -10,18 +10,27 @@ def setting(request):
     
 def page(request):
     page = request.get_full_path()
+    pages = {
+        '/': 'anasayfa',
+        '/product/': 'ürünler',
+        '/user/': 'kullanıcı Profili',
+        '/user/login': 'kullanıcı Girişi',
+        '/user/register': 'kullanıcı Kayıt',
+        '/user/update': 'profil Güncelleme',
+    }
+    
+    print(f'Page Length: {len(page)}, Page List: {page}')
     
     if page == '/':
-        return {'page': 'Anasayfa'}
+        return {'page': pages[page]}
     
-    elif page == '/product/':
-        return {'page': 'Ürünler'}
-    
-    else:
-        page = page.split('/')
-        print(len(page))
-        
-        if len(page) > 2:
-            return {'page': page[len(page)-1]}
+    else: 
+        if page in pages:
+            return {'page': pages[page]}
         else:
+            page = page.split('/')
+            page = [i for i in page if i]
+        
+            print(f'Page Length: {len(page)}, Page List: {page}')
+            
             return {'page': page[1]}
