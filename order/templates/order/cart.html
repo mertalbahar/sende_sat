@@ -4,7 +4,7 @@
 {% block content %}
 <h3>
     ALIŞVERİŞ SEPETİ [ <small>{% if request.session.cart_items %}{{ request.session.cart_items }}{% else %}0{% endif %} ürün</small>]
-    <a href="products.html" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a>
+    <a href="{% url 'product' %}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Alışverişe devam et </a>
 </h3>
 <hr class="soft" />
 
@@ -75,7 +75,7 @@
                     <input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text" value="{{ item.quantity }}">
                     <button class="btn" type="button"><i class="icon-minus"></i></button>
                     <button class="btn" type="button"><i class="icon-plus"></i></button>
-                    <button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>
+                    <a href="{% url 'remove_cart' item.id %}" class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></a>
                 </div>
             </td>
             <td>{{ item.price|floatformat:2 }}</td>
@@ -152,7 +152,7 @@
         </td>
     </tr>
 </table>
-<a href="products.html" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+<a href="{% url 'product' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Alışverişe devam et </a>
 <a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
 <!-- MainBody End ============================= -->
 {% endblock content %}

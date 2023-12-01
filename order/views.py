@@ -85,3 +85,13 @@ def add_cart(request, id):
     messages.success(request, 'Ürün sepete eklendi.')
     request.session['cart_items'] = Cart.objects.filter(user_id = request.user.id).count()
     return redirect(url)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def remove_cart(request, id):
+    url = request.META.get('HTTP_REFERER')
+    Cart.objects.filter(id = id).delete()
+    messages.success(request, 'Ürün sepetten silindi.')
+    request.session['cart_items'] = Cart.objects.filter(user_id = request.user.id).count()
+    
+    return redirect(url)
