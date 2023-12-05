@@ -37,10 +37,10 @@ class Cart(models.Model):
 
 class Order(models.Model):
     STATUS = (
-        ('New', 'Yeni'),
-        ('Accepted', 'İşleme Alındı'),
-        ('Completed', 'Tamamlandı'),
-        ('Canceled', 'İptal Edildi'),
+        ('Yeni', 'Yeni'),
+        ('İşleme Alındı', 'İşleme Alındı'),
+        ('Tamamlandı', 'Tamamlandı'),
+        ('İptal Edildi', 'İptal Edildi'),
     )
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     code = models.CharField(max_length=5, editable=False)
@@ -51,7 +51,7 @@ class Order(models.Model):
     city = models.CharField(max_length=20, verbose_name='Şehir')
     country = models.CharField(max_length=20, verbose_name='Ülke')
     total = models.FloatField(verbose_name='Tutar')
-    status=models.CharField(max_length=10, choices=STATUS, default='New', verbose_name='Durum')
+    status=models.CharField(max_length=15, choices=STATUS, default='Yeni', verbose_name='Durum')
     ip = models.CharField(blank=True, max_length=20)
     adminnote = models.CharField(blank=True, max_length=100, verbose_name='Not')
     created_at=models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma')
@@ -72,12 +72,12 @@ class Order(models.Model):
 
 class OrderProduct(models.Model):
     STATUS = (
-        ('New', 'Yeni'),
-        ('Accepted', 'İşleme Alındı'),
-        ('Preparing', 'Hazırlanıyor'),
-        ('OnShipping', 'Kargolandı'),
-        ('Completed', 'Tamamlandı'),
-        ('Canceled', 'İptal Edildi'),
+        ('Yeni', 'Yeni'),
+        ('İşleme Alındı', 'İşleme Alındı'),
+        ('Hazırlanıyor', 'Hazırlanıyor'),
+        ('Kargolandı', 'Kargolandı'),
+        ('Tamamlandı', 'Tamamlandı'),
+        ('İptal Edildi', 'İptal Edildi'),
     )
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -85,7 +85,7 @@ class OrderProduct(models.Model):
     quantity = models.IntegerField(verbose_name='Adet')
     price = models.FloatField(verbose_name='Fiyat')
     subtotal = models.FloatField(verbose_name='Toplam')
-    status = models.CharField(max_length=10, choices=STATUS, default='New', verbose_name='Durum')
+    status = models.CharField(max_length=15, choices=STATUS, default='Yeni', verbose_name='Durum')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme')
     

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h3>
+    SİPARİŞLERİM [ <small>{% if active_orders %}{{ active_orders }}{% else %}0{% endif %} ürün</small>]
+</h3>
+<hr class="soft" />
+
+<div class="row">
+    <div class="span1"> &nbsp;</div>
+    <div class="span7">
+        <h5>Fatura Detayı</h5>
+        <div class="well">
+            <table class="table">
+                <tr>
+                    <th>İsim Soyisim</th>
+                    <td>{{ order.first_name}} {{ order.last_name }} </td>
+                </tr>
+                <tr>
+                    <th>Telefon</th>
+                    <td>{{ order.phone}}</td>
+                </tr>
+                <tr>
+                    <th>Adres</th>
+                    <td>{{ order.address}}</td>
+                </tr>
+                <tr>
+                    <th>Şehir</th>
+                    <td>{{ order.city}}</td>
+                </tr>
+                <tr>
+                    <th>Ülke</th>
+                    <td>{{ order.country}}</td>
+                </tr>
+                <tr>
+                    <th>Durumu</th>
+                    <td>{{ order.status}}</td>
+                </tr>
+                <tr>
+                    <th>Sipariş Tarihi</th>
+                    <td>{{ order.created_at}}</td>
+                </tr>
+                <tr>
+                    <th>Bilgi</th>
+                    <td>{{ order.adminnote}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="span9">
+        <h5>Sipariş Detayı</h5>
+        <div class="well">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ürün</th>
+                        <th>Fiyat</th>
+                        <th>Adet</th>
+                        <th>Toplam</th>
+                        <th>Sipariş Tarihi</th>
+                        <th>Durumu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in order_items %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.product.title }}</td>
+                        <td>{{ item.price|floatformat:2 }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.subtotal|floatformat:2 }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>{{ item.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<a href="{% url 'order' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Siparişlerim </a>
+<!-- MainBody End ============================= -->
+{% endblock content %}
