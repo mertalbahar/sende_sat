@@ -13,33 +13,40 @@
         <form class="form-inline navbar-search" method="post" action="products.html">
             <input id="srchFld" class="srchTxt" type="text" />
             <select class="srchTxt">
-                <option>All</option>
-                <option>CLOTHES </option>
-                <option>FOOD AND BEVERAGES </option>
-                <option>HEALTH & BEAUTY </option>
-                <option>SPORTS & LEISURE </option>
-                <option>BOOKS & ENTERTAINMENTS </option>
+                <option>Kategoriler</option>
+                {% for cat in categories %}
+                <option>{{ cat.title }}</option>
+                {% endfor %}
             </select>
             <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
         </form>
-        <ul id="topMenu" class="nav pull-right">
-            <li class=""><a href="{% url 'product' %}">Ürünler</a></li>
-            <li class=""><a href="special_offer.html">Specials Offer</a></li>
-            <li class=""><a href="normal.html">Delivery</a></li>
-            <li class=""><a href="contact.html">Contact</a></li>
-            {% if user.is_authenticated %}
-            <li class="">
-                <a href="{% url 'user_logout' %}" style="padding-right:0">
-                    <span class="btn btn-large btn-success">Çıkış</span>
-                </a>
-            </li>
-            {% else %}
-            <li class="">
-                <a href="{% url 'user_login' %}" style="padding-right:0">
-                    <span class="btn btn-large btn-success">Giriş</span>
-                </a>
-            </li>
-            {% endif %}
-        </ul>
+        <div class="nav-collapse pull-right" style="">
+            <ul id="topMenu" class="nav">
+                <li class=""><a href="{% url 'product' %}">Ürünler</a></li>
+                <li class=""><a href="special_offer.html">Specials Offer</a></li>
+                <li class=""><a href="normal.html">Delivery</a></li>
+                <li class=""><a href="contact.html">Contact</a></li>
+                {% if user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span class="btn btn-large btn-success">{{ user.username }}</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'user_profile' %}">Profilim</a></li>
+                        <li><a href="{% url 'order' %}">Siparişlerim</a></li>
+                        <li class="divider"></li>
+                        <li class="">
+                            <a href="{% url 'user_logout' %}">
+                                <span >Çıkış</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="">
+                    <a href="{% url 'user_login' %}" style="padding-right:0">
+                        <span class="btn btn-large btn-success">Giriş</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-</div>
