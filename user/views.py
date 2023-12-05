@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
 
+from order.models import Cart
+
 from .models import UserProfile
 from .forms import UserLoginForm, UserPasswordChangeForm, UserProfileForm, UserRegisterForm, UserUpdateForm
 
@@ -38,6 +40,7 @@ def user_login(request):
             
             if user is not None:
                 login(request, user)
+                request.session['cart_items'] = Cart.objects.filter(user_id = request.user.id).count()
                 messages.add_message(request, messages.SUCCESS, 'Başarılı bir şekilde oturum açtınız.')
                 next_url = request.GET.get('next', None)
                 

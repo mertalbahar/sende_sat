@@ -69,7 +69,11 @@
         {% for item in cart %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td><img width="60" src="{{ item.product.image.url }}" alt="{{ item.title }}" /> {{ item }}</td>
+            <td>
+                <a href="{% url 'product_detail' item.product.category.slug item.product.slug %}" style="text-decoration: none;">
+                    <img width="60" src="{{ item.product.image.url }}" alt="{{ item.title }}" /> {{ item }}
+                </a>
+            </td>
             <td>
                 <div class="input-append">
                     <input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text" value="{{ item.quantity }}">
@@ -153,6 +157,6 @@
     </tr>
 </table>
 <a href="{% url 'product' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Alışverişe devam et </a>
-<a href="login.html" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+<a href="{% url 'order_product' %}" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
 <!-- MainBody End ============================= -->
 {% endblock content %}
