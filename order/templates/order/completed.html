@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h3>
+    SİPARİŞ ALINDI
+</h3>
+<hr class="soft" />
+
+<h3>Siparişiniz için teşekkür ederiz.</h3>
+<p>Sayın {{ user.get_full_name }}, siparişiniz tarafımıza ulaşmıştır.</p>
+<p>Sipariş kodunuz: {{ ordercode }}</p>
+<p>Teşekkürler.</p>
+
+<a href="{% url 'home' %}" class="btn btn-large pull-right"><i class="icon-home"></i> Anasayfa </a>
+{% endblock content %}

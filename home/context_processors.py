@@ -13,26 +13,22 @@ def page(request):
     pages = {
         '/': 'anasayfa',
         '/product/': 'ürünler',
-        '/user/': 'kullanıcı Profili',
-        '/user/login': 'kullanıcı Girişi',
-        '/user/register': 'kullanıcı Kayıt',
-        '/user/update': 'profil Güncelleme',
-        '/order/': 'Siparişler',
-        '/order/cart': 'Sepet',
+        '/user/': 'kullanıcı profili',
+        '/user/login': 'kullanıcı girişi',
+        '/user/register': 'kullanıcı kayıt',
+        '/user/update': 'profil güncelleme',
+        '/user/password': 'şifre güncelleme',
+        '/order/': 'siparişler',
+        '/order/cart': 'sepet',
     }
     
-    print(f'Page Length: {len(page)}, Page List: {page}')
-    
-    if page == '/':
+    if page in pages:
         return {'page': pages[page]}
+    else:
+        page = page.split('/')
+        page = [i for i in page if i]
     
-    else: 
-        if page in pages:
-            return {'page': pages[page]}
+        if len(page) == 1:
+            return {'page': page[0]}
         else:
-            page = page.split('/')
-            page = [i for i in page if i]
-        
-            print(f'Page Length: {len(page)}, Page List: {page}')
-            
             return {'page': page[1]}
