@@ -14,14 +14,14 @@
     {% csrf_token %}
 
     <div class="span7">
-        <h5>ÖDEME BİLGİLERİ</h5>
+        <h5>Fatura Bilgileri</h5>
         <div class="well">
             {% include "partials/_form.html" %}
         </div>
     </div>
 
     <a href="{% url 'cart' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Sepete dön </a>
-    <button type="submit" class="btn btn-large pull-right">Siparişi Tamamla <i class="icon-arrow-right"></i></button>
+    <button type="submit" class="btn btn-large btn-success pull-right">Siparişi Tamamla <i class="icon-arrow-right"></i></button>
 </form>
 <!-- MainBody End ============================= -->
 {% endblock content %}

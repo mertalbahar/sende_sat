@@ -14,10 +14,35 @@ from .models import Cart, Order, OrderProduct
 from .forms import CartForm, OrderForm
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def index(request):
-    return render(request, 'order/index.html')
+    orders = Order.objects.filter(user_id = request.user.id).order_by('-id')
+    active_orders = orders.exclude(status = 'Tamamlandı').exclude(status = 'İptal Edildi').count()
+    
+    context = {
+        'orders': orders,
+        'active_orders': active_orders
+    }
+    
+    return render(request, 'order/index.html', context)
 
 
+@login_required(login_url=settings.LOGIN_URL)
+def order_detail(request, id):
+    order = Order.objects.get(user_id = request.user.id, id = id)
+    order_items = OrderProduct.objects.filter(order = order)
+    active_orders = order_items.exclude(status = 'Tamamlandı').exclude(status = 'İptal Edildi').count()
+    
+    context = {
+        'order': order,
+        'order_items': order_items,
+        'active_orders': active_orders
+    }
+    
+    return render(request, 'order/order_detail.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
 def cart(request):
     cart = Cart.objects.filter(user_id = request.user.id)
         
@@ -105,6 +130,14 @@ def remove_cart(request, id):
 @transaction.atomic
 def order_product(request):
     cart = Cart.objects.filter(user_id = request.user.id)
+    
+    print(cart)
+    
+    if cart.count() == 0:
+        messages.add_message(request, messages.WARNING, 'Devam etmeden önce sepetinize ürün ekleyin.')
+        
+        return redirect('cart')
+    
     total = 0
     
     for item in cart:

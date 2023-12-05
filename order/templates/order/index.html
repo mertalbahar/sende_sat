@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h3>
+    SİPARİŞLERİM [ <small>{% if active_orders %}{{ active_orders }}{% else %}0{% endif %} sipariş</small>]
+</h3>
+<hr class="soft" />
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Sipariş Kodu</th>
+            <th>İsim</th>
+            <th>Soyisim</th>
+            <th>Tutar</th>
+            <th>Sipariş Tarihi</th>
+            <th>Durumu</th>
+            <th>Detay</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ order.code }}</td>
+            <td>{{ order.first_name }}</td>
+            <td>{{ order.last_name }}</td>
+            <td>{{ order.total|floatformat:2 }}</td>
+            <td>{{ order.created_at }}</td>
+            <td>{{ order.status }}</td>
+            <td>
+                <a class="btn btn-sm" href="{% url 'order_detail' order.id %}">İncele</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<!-- MainBody End ============================= -->
+{% endblock content %}
