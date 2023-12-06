@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h3> Products Name <small class="pull-right"> 40 products are available </small></h3>
+<h3> Products Name <small class="pull-right"> {{ active_products }} ürün </small></h3>
 <hr class="soft" />
 <p>
 	Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the
@@ -45,6 +45,7 @@
 	</div>
 </div>
 
+<a href="{% url 'user_add_product' %}" class="btn btn-large">Ürün Ekle</a>
 <a href="compair.html" class="btn btn-large pull-right">Ürünleri Karşılaştır</a>
 
 {% include "product/partials/_pagination.html" %}

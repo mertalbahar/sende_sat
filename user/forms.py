@@ -1,7 +1,10 @@
-from django import forms
-from django.forms import widgets
+from django.forms import FileInput, ModelForm, NumberInput, Select, TextInput, widgets
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
+
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+from product.models import Category, Product
 
 from .models import UserProfile
 
@@ -36,7 +39,7 @@ class UserRegisterForm(UserCreationForm):
         return email
     
     
-class UserUpdateForm(forms.ModelForm):
+class UserUpdateForm(ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name')
@@ -54,7 +57,7 @@ CITY = (
 )
         
         
-class UserProfileForm(forms.ModelForm):
+class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
         fields = ('phone', 'address', 'city', 'country', 'image')
@@ -74,3 +77,29 @@ class UserPasswordChangeForm(PasswordChangeForm):
         self.fields['old_password'].widget = widgets.PasswordInput(attrs={'class': 'form-control'})
         self.fields['new_password1'].widget = widgets.PasswordInput(attrs={'class': 'form-control'})
         self.fields['new_password2'].widget = widgets.PasswordInput(attrs={'class': 'form-control'})
+
+
+class UserProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ('category', 'title', 'keywords', 'description', 'price', 'quantity', 'detail', 'image')
+        widgets = {
+            'category': Select(attrs={'class': 'form-control', 'placeholder': 'Category'}, choices=Category.objects.all()),
+            'title': TextInput(attrs={'class': 'form-control', 'placeholder': 'Ürün'}),
+            'keywords': TextInput(attrs={'class': 'form-control', 'placeholder': 'Anahtar Kelimeler'}),
+            'description': TextInput(attrs={'class': 'form-control', 'placeholder': 'Açıklama'}),
+            'price': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Fiyat'}),
+            'quantity': NumberInput(attrs={'class': 'form-control', 'placeholder': 'Adet'}),
+            'detail': CKEditorUploadingWidget(),
+            'image': FileInput(attrs={'class': 'form-control', 'placeholder': 'Resim'}),
+        }
+        labels = {
+            'category': 'Kategori',
+            'title': 'Ürün',
+            'keywords': 'Anahtar Kelimeler',
+            'description': 'Açıklama',
+            'price': 'Fiyat',
+            'quantity': 'Adet',
+            'detail': 'Detay',
+            'image': 'Resim'
+        }
