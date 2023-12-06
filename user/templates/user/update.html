@@ -2,51 +2,53 @@
 {% load static %}
 
 {% block content %}
-<h3>[{{ user.username }}] Profil Güncelleme</h3>
-<hr class="soft" />
+<div class="span9">
+    <h3>PROFİL GÜNCELLEME</h3>
+    <hr class="soft" />
 
-<div class="row">
-    <div class="span1"> &nbsp;</div>
-	<div class="span7">
-        <div class="well">
-            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
+    <div class="row">
+        <div class="span1"> &nbsp;</div>
+        <div class="span7">
+            <h5>[ <span class="label label-info">{{ user.username }}</span> ] Profilini Güncelle</h5>
+            <div class="well">
+                <form class="form-horizontal" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-                {% for field in user_form %}
-                <div class="control-group {% if field.errors %}invalid{% endif %}">
-                    {% if field.errors %}
-                    <div class="alert alert-danger">
-                        {{ field.errors }}
+                    {% for field in user_form %}
+                    <div class="control-group {% if field.errors %}invalid{% endif %}">
+                        {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {{ field.errors }}
+                        </div>
+                        {% endif %}
+                        <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+                        <div class="controls">
+                            {{ field }}
+                        </div>
                     </div>
-                    {% endif %}
-                    <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
-                    <div class="controls">
-                        {{ field }}
-                    </div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
 
-                {% for field in user_profile_form %}
-                <div class="control-group {% if field.errors %}invalid{% endif %}">
-                    {% if field.errors %}
-                    <div class="alert alert-danger">
-                        {{ field.errors }}
+                    {% for field in user_profile_form %}
+                    <div class="control-group {% if field.errors %}invalid{% endif %}">
+                        {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {{ field.errors }}
+                        </div>
+                        {% endif %}
+                        <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
+                        <div class="controls">
+                            {{ field }}
+                        </div>
                     </div>
-                    {% endif %}
-                    <label for="{{ field.id_for_label }}" class="control-label">{{ field.label }}</label>
-                    <div class="controls">
-                        {{ field }}
-                    </div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
 
-                <div class="btn-group" style="display: flex; justify-content: space-between">
-                    <a href="{% url 'user_profile' %}" class="btn">Geri Dön</a>
-                    <button type="submit" class="btn btn-success">Güncelle</button>
-                </div>
-            </form>
+                    <div class="btn-group" style="display: flex; justify-content: space-between">
+                        <a href="{% url 'user_profile' %}" class="btn">Geri Dön</a>
+                        <button type="submit" class="btn btn-success">Güncelle</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-<!-- MainBody End ============================= -->
 {% endblock content %}

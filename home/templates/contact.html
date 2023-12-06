@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sidebar %}
+
+{% endblock sidebar %}
+
+{% block breadcrumb %}
+
+{% endblock breadcrumb %}
+
+{% block content %}
+<div class="span12">
+    <hr class="soften">
+    <h1>Bize Ulaşın</h1>
+    <hr class="soften" />
+</div>
+
+<div class="span6">
+    {{ setting.contact|safe }}
+</div>
+
+<div class="span6">
+    {{ setting.aboutus|safe }}
+</div>
+
+<div class="span12"> &nbsp;</div>
+
+<div class="span6">
+    <h4>Email Us</h4>
+    <form class="form-horizontal" method="POST" novalidate>
+        {% csrf_token %}
+
+        {% include "partials/_form.html" %}
+
+        <button class="btn btn-large" type="submit">Mesaj Gönder</button>
+    </form>
+</div>
+
+<div class="span6">
+    <iframe style="width:100%; height:300; border: 0px" scrolling="no"
+        src="https://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=18+California,+Fresno,+CA,+United+States&amp;aq=0&amp;oq=18+California+united+state&amp;sll=39.9589,-120.955336&amp;sspn=0.007114,0.016512&amp;ie=UTF8&amp;hq=&amp;hnear=18,+Fresno,+California+93727,+United+States&amp;t=m&amp;ll=36.732762,-119.695787&amp;spn=0.017197,0.100336&amp;z=14&amp;output=embed"></iframe><br />
+    <small><a
+            href="https://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=18+California,+Fresno,+CA,+United+States&amp;aq=0&amp;oq=18+California+united+state&amp;sll=39.9589,-120.955336&amp;sspn=0.007114,0.016512&amp;ie=UTF8&amp;hq=&amp;hnear=18,+Fresno,+California+93727,+United+States&amp;t=m&amp;ll=36.732762,-119.695787&amp;spn=0.017197,0.100336&amp;z=14"
+            style="color:#0000FF;text-align:left">View Larger Map</a></small>
+</div>
+
+{% endblock content %}

@@ -2,47 +2,48 @@
 {% load static %}
 
 {% block content %}
-<h3>Üyelik İşlemleri</h3>
-<hr class="soft" />
+<div class="span9">
+	<h3>Üyelik İşlemleri</h3>
+	<hr class="soft" />
 
-<div class="row">
-	<div class="span4">
-		<div class="well">
-			<h5>KULLANICI OLUŞTUR</h5><br />
-			Kullanıcı oluşturmak için lütfen email adresinizi giriniz.<br /><br />
-			<form action="{% url 'user_register' %}" method="POST" name="emailcheck">
-				{% csrf_token %}
+	<div class="row">
+		<div class="span4">
+			<div class="well">
+				<h5>KULLANICI OLUŞTUR</h5><br />
+				Kullanıcı oluşturmak için lütfen email adresinizi giriniz.<br /><br />
+				<form action="{% url 'user_register' %}" method="POST" name="emailcheck">
+					{% csrf_token %}
 
-				<div class="control-group">
-					<label class="control-label" for="inputEmail0">E-mail adresiniz</label>
-					<div class="controls">
-						<input class="span3" type="text" name="emailcheck" id="inputEmail0" placeholder="Email">
+					<div class="control-group">
+						<label class="control-label" for="inputEmail0">E-mail adresiniz</label>
+						<div class="controls">
+							<input class="span3" type="text" name="emailcheck" id="inputEmail0" placeholder="Email">
+						</div>
 					</div>
-				</div>
-				<div class="controls">
-					<button type="submit" class="btn block">Kullanıcı Oluştur</button>
-				</div>
-			</form>
+					<div class="controls">
+						<button type="submit" class="btn block">Kullanıcı Oluştur</button>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
-	<div class="span1"> &nbsp;</div>
-	<div class="span4">
-		<div class="well">
-			<h5>KULLANICI GİRİŞİ</h5>
-			<form method="POST" novalidate>
-				{% csrf_token %}
+		<div class="span1"> &nbsp;</div>
+		<div class="span4">
+			<div class="well">
+				<h5>KULLANICI GİRİŞİ</h5>
+				<form method="POST" novalidate>
+					{% csrf_token %}
 
-				{% include "partials/_form.html" %}
+					{% include "partials/_form.html" %}
 
-				<div class="control-group">
-					<div class="controls">
-						<button type="submit" class="btn">Giriş Yap</button> <a href="forgetpass.html">Forget
-							password?</a>
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn">Giriş Yap</button> <a href="forgetpass.html">Forget
+								password?</a>
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
-<!-- MainBody End ============================= -->
 {% endblock content %}

@@ -2,26 +2,29 @@
 {% load static %}
 
 {% block content %}
-<h3>
-    ÖDEMEYİ TAMAMLA
-    <a href="{% url 'product' %}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Alışverişe devam et
-    </a>
-</h3>
-<hr class="soft" />
+<div class="span9">
+    <h3>
+        ÖDEMEYİ TAMAMLA
+        <a href="{% url 'product' %}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Alışverişe devam
+            et
+        </a>
+    </h3>
+    <hr class="soft" />
 
-<div class="span1"> &nbsp;</div>
-<form class="form-horizontal" method="POST" novalidate>
-    {% csrf_token %}
+    <div class="span1"> &nbsp;</div>
+    <form class="form-horizontal" method="POST" novalidate>
+        {% csrf_token %}
 
-    <div class="span7">
-        <h5>Fatura Bilgileri</h5>
-        <div class="well">
-            {% include "partials/_form.html" %}
+        <div class="span7">
+            <h5>Fatura Bilgileri</h5>
+            <div class="well">
+                {% include "partials/_form.html" %}
+            </div>
         </div>
-    </div>
 
-    <a href="{% url 'cart' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Sepete dön </a>
-    <button type="submit" class="btn btn-large btn-success pull-right">Siparişi Tamamla <i class="icon-arrow-right"></i></button>
-</form>
-<!-- MainBody End ============================= -->
+        <a href="{% url 'cart' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Sepete dön </a>
+        <button type="submit" class="btn btn-large btn-success pull-right">Siparişi Tamamla <i
+                class="icon-arrow-right"></i></button>
+    </form>
+</div>
 {% endblock content %}

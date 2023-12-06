@@ -38,3 +38,27 @@ class SiteSetting(models.Model):
     
     def __str__(self):
         return self.title
+
+
+class ContactMessage(models.Model):
+    STATUS = (
+        ('New', 'Yeni'),
+        ('Read', 'Okundu'),
+        ('Closed', 'Kapandı'),
+    )
+    name = models.CharField(max_length=20, verbose_name='İsim')
+    email = models.EmailField()
+    subject = models.CharField(max_length=50, verbose_name='Konu')
+    message = models.TextField(max_length=255, verbose_name='Mesaj')
+    status = models.CharField(max_length=10, choices=STATUS, default='New', verbose_name='Durum')
+    ip = models.GenericIPAddressField()
+    adminnote = models.CharField(max_length=100, blank=True, verbose_name='Not')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme')
+    
+    class Meta:
+        verbose_name = 'İletişim Formu'
+        verbose_name_plural = 'İletişim Formları'
+    
+    def __str__(self):
+        return self.name
