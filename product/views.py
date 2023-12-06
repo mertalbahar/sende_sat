@@ -9,10 +9,12 @@ def index(request):
     paginator = Paginator(products, 6)
     page = request.GET.get('page', 1)
     page_obj = paginator.page(page)
+    active_products = products.count()
     
     context = {
         'products': products,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'active_products': active_products
     }
 
     return render(request, 'product/index.html', context)
@@ -35,6 +37,7 @@ def product_detail(request, c_slug, p_slug):
 def category_products(request, c_slug):
     category = Category.objects.get(slug = c_slug)
     products = list(Product.objects.filter(category = category))
+    active_products = Product.objects.filter(category = category).count()
     
     node = category
     children = Category.objects.add_related_count(node.get_children(), Product, 'category', 'product_counts')
@@ -49,7 +52,8 @@ def category_products(request, c_slug):
     
     context = {
         'products': products,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'active_products': active_products
     }
     
     return render(request, 'product/index.html', context)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
 
@@ -56,8 +57,8 @@ class Product(models.Model):
     price = models.FloatField(verbose_name='Birim Fiyat')
     quantity = models.IntegerField(default=0, verbose_name='Adet')
     detail = models.TextField(verbose_name='Detay')
-    status = models.CharField(max_length=10, choices=STATUS, verbose_name='Yayınla')
-    slug = models.SlugField()
+    status = models.CharField(max_length=10, choices=STATUS, verbose_name='Yayınla', default='False')
+    slug = models.SlugField(allow_unicode=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme')
     user = models.ForeignKey(User, on_delete=models.CASCADE, default='admin')
@@ -68,6 +69,10 @@ class Product(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
     
     def get_ablosute_url(self):
         return reverse('products_url', kwargs={'slug': self.slug})

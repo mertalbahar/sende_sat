@@ -9,10 +9,10 @@ from django.core.validators import validate_email
 from django.core.paginator import Paginator
 
 from order.models import Cart
-from product.models import Product
+from product.models import Category, Product
 
 from .models import UserProfile
-from .forms import UserLoginForm, UserPasswordChangeForm, UserProfileForm, UserRegisterForm, UserUpdateForm
+from .forms import UserLoginForm, UserPasswordChangeForm, UserProductForm, UserProfileForm, UserRegisterForm, UserUpdateForm
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -158,10 +158,45 @@ def user_products(request):
     paginator = Paginator(products, 9)
     page = request.GET.get('page', 1)
     page_obj = paginator.page(page)
+    active_products = products.count()
     
     context = {
         'products': products,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'active_products': active_products
     }
     
     return render(request, 'user/user_products.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def user_add_product(request):
+    if request.method == 'POST':
+        form = UserProductForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            data = Product()
+            data.user_id = request.user.id
+            data.category = form.cleaned_data['category']
+            data.title = form.cleaned_data['title']
+            data.keywords = form.cleaned_data['keywords']
+            data.description = form.cleaned_data['description']
+            data.price = form.cleaned_data['price']
+            data.quantity = form.cleaned_data['quantity']
+            data.detail = form.cleaned_data['detail']
+            data.image = form.cleaned_data['image']
+            data.save()
+            
+            messages.success(request, 'Ürününüz eklendi.')
+            return redirect('user_products')
+        
+        else:
+            messages.error(request, form.errors)
+            return redirect('user_add_product')
+    
+    form = UserProductForm
+    
+    context = {
+        'form': form
+    }
+    return render(request, 'user/user_add_product.html', context)
