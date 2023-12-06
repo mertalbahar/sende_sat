@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
 
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -59,6 +60,7 @@ class Product(models.Model):
     slug = models.SlugField()
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default='admin')
     
     class Meta:
         verbose_name = 'Ürün'

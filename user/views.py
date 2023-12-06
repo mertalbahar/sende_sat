@@ -6,8 +6,10 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.validators import validate_email
+from django.core.paginator import Paginator
 
 from order.models import Cart
+from product.models import Product
 
 from .models import UserProfile
 from .forms import UserLoginForm, UserPasswordChangeForm, UserProfileForm, UserRegisterForm, UserUpdateForm
@@ -148,3 +150,18 @@ def user_password_change(request):
         form = UserPasswordChangeForm(request.user)
         
         return render(request, 'user/password_change.html', {'form': form})
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def user_products(request):
+    products = Product.objects.filter(user_id = request.user.id)
+    paginator = Paginator(products, 9)
+    page = request.GET.get('page', 1)
+    page_obj = paginator.page(page)
+    
+    context = {
+        'products': products,
+        'page_obj': page_obj
+    }
+    
+    return render(request, 'user/user_products.html', context)
