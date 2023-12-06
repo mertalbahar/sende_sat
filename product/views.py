@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.conf import settings
+from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-from .models import Category, Product, ProductImages
+from .forms import CommentForm
+from .models import Category, Comment, Product, ProductImages
 
 
 def index(request):
@@ -57,3 +61,26 @@ def category_products(request, c_slug):
     }
     
     return render(request, 'product/index.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def add_comment(request, id):
+    url = request.META.get('HTTP_REFERER')
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        
+        if form.is_valid():
+            data = Comment()
+            data.product_id = id
+            data.user_id = request.user.id
+            data.ip = request.META.get('REMOTE_ADDR')
+            data.rate = form.cleaned_data['rate']
+            data.subject = form.cleaned_data['subject']
+            data.comment = form.cleaned_data['comment']
+            data.save()
+            messages.success(request, "Yorumunuz gönderilmiştir, teşekkür ederiz.")
+            
+            return redirect(url)
+    
+    return redirect(url)

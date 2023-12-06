@@ -104,3 +104,27 @@ class ProductImages(models.Model):
         return mark_safe('<img src="{}" height="50" />'.format(self.image.url))
     
     image_tag.short_description = 'Resim'
+
+
+class Comment(models.Model):
+    STATUS = (
+        ('New', 'Yeni'),
+        ('Read', 'Okundu'),
+        ('Closed', 'Kapandı'),
+    )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=50, verbose_name='Konu')
+    comment = models.TextField(max_length=255, verbose_name='Yorum')
+    rate = models.IntegerField(default=1)
+    status = models.CharField(max_length=10, choices=STATUS, default='New', verbose_name='Durum')
+    ip = models.GenericIPAddressField()
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme')
+    
+    class Meta:
+        verbose_name = 'Yorum'
+        verbose_name_plural = 'Yorumlar'
+    
+    def __str__(self):
+        return self.subject
