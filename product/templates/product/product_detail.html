@@ -150,6 +150,36 @@
                 <div class="row">
                     <div class="span5">
                         <h4>Yorumlar</h4>
+                        {% if comments %}
+                            {% for comment in comments %}
+                            <div style="display: inline;">
+                                {% if comment.user.userprofile.image %}
+                                <img src="{{ comment.user.userprofile.image.url }}" alt="Image" style="width: 45px;">
+                                {% else %}
+                                <img src="{% static 'user/img/user.png' %}" alt="Image" style="width: 45px;">
+                                {% endif %}
+
+                                <h6 style="display: inline;">
+                                    {{ comment.user.first_name|truncatechars:3 }}
+                                    {{ comment.user.last_name|truncatechars:3 }}
+                                    <small> - <i>{{ comment.created_at}}</i></small>
+                                </h6>
+                                <div class="pull-right">
+                                    {% with ''|center:comment.rate as range %}
+                                        {% for _ in range %}
+                                        <span>&#10031;</span>
+                                        {% endfor %}
+                                    {% endwith %}
+                                </div>
+                            </div>
+                            
+                            <div class="well well-small" style="margin-top: 12px;">
+                                <p>{{ comment.comment }}</p>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <h5>Henüz yorum yapılmamış</h5>
+                        {% endif %}
                     </div>
                     <div class="span4">
                         <h4>Yorum Ekle</h4>

@@ -108,9 +108,9 @@ class ProductImages(models.Model):
 
 class Comment(models.Model):
     STATUS = (
-        ('New', 'Yeni'),
-        ('Read', 'Okundu'),
-        ('Closed', 'Kapandı'),
+        ('Yeni', 'Yeni'),
+        ('Onaylandı', 'Onaylandı'),
+        ('Kaldırıldı', 'Kaldırıldı'),
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
