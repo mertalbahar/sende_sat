@@ -2,25 +2,33 @@
 {% load static %}
 
 {% block content %}
-<h3>
-    ÜRÜN EKLEME <a href="{% url 'user_products' %}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Geri gel </a>
-</h3>
-<hr class="soft" />
+<div class="span9">
+    <h3>
+        ÜRÜN EKLEME
+        <a href="{% url 'user_products' %}" class="btn btn-large pull-right">
+            <i class="icon-arrow-left"></i> Geri gel
+        </a>
+    </h3>
+    <hr class="soft" />
 
-<div class="span1"> &nbsp;</div>
-<form class="form-horizontal" method="POST" enctype="multipart/form-data" novalidate>
-    {% csrf_token %}
+    <div class="row">
+        <div class="span9">
+            <h5>Yeni Ürün Ekle</h5>
+            <div class="well">
+                <form class="form-horizontal" method="POST" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
 
-    <div class="span8">
-        <h5>Yeni Ürün Ekle</h5>
-        <div class="well">
-            {% include "partials/_form.html" %}
-            {{ form.media }}
+                    {% include "partials/_form.html" %}
+                    {{ form.media }}
+
+                    <a href="{% url 'user_products' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Geri gel
+                    </a>
+                    <button type="submit" class="btn btn-large btn-success pull-right">
+                        Kaydet <i class="icon-save"></i>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-
-    <a href="{% url 'user_products' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Geri gel </a>
-    <button type="submit" class="btn btn-large btn-success pull-right">Kaydet <i class="icon-save"></i></button>
-</form>
-<!-- MainBody End ============================= -->
+</div>
 {% endblock content %}

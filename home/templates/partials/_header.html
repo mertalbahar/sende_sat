@@ -2,37 +2,37 @@
 
 <div id="header">
 	<div class="container">
-	<div id="welcomeLine" class="row">
-		{% if user.is_authenticated %}
-		<div class="span6">
-			Hoşgeldiniz!
-			<a href="{% url 'user_profile' %}"><strong>{{ user.username }}</strong></a>
+		<div id="welcomeLine" class="row">
+			{% if user.is_authenticated %}
+			<div class="span6">
+				Hoşgeldiniz!
+				<a href="{% url 'user_profile' %}"><strong>{{ user.username }}</strong></a>
+			</div>
+			{% else %}
+			<div class="span6">
+				Merhaba!
+				<a href="{% url 'user_login' %}"><strong>Ziyaretçi</strong></a>
+			</div>
+			{% endif %}
+			<div class="span6">
+				<div class="pull-right">
+					<a href="product_summary.html"><span class="">Fr</span></a>
+					<a href="product_summary.html"><span class="">Es</span></a>
+					<span class="btn btn-mini">En</span>
+					<a href="product_summary.html"><span>&pound;</span></a>
+					<span class="btn btn-mini">$155.00</span>
+					<a href="product_summary.html"><span class="">$</span></a>
+					<a href="{% url 'cart' %}">
+						<span class="btn btn-mini btn-primary">
+							<i class="icon-shopping-cart icon-white"></i>
+							[ {% if request.session.cart_items %}{{ request.session.cart_items }}{% else %}0{% endif %}
+							] Ürün
+						</span> </a>
+				</div>
+			</div>
 		</div>
-		{% else %}
-		<div class="span6">
-			Merhaba!
-			<a href="{% url 'user_login' %}"><strong>Ziyaretçi</strong></a>
-		</div>
-		{% endif %}
-		<div class="span6">
-		<div class="pull-right">
-			<a href="product_summary.html"><span class="">Fr</span></a>
-			<a href="product_summary.html"><span class="">Es</span></a>
-			<span class="btn btn-mini">En</span>
-			<a href="product_summary.html"><span>&pound;</span></a>
-			<span class="btn btn-mini">$155.00</span>
-			<a href="product_summary.html"><span class="">$</span></a>
-			<a href="{% url 'cart' %}">
-				<span class="btn btn-mini btn-primary">
-					<i class="icon-shopping-cart icon-white"></i>
-					[ {% if request.session.cart_items %}{{ request.session.cart_items }}{% else %}0{% endif %} ] Ürün
-				</span> </a> 
-		</div>
-		</div>
-	</div>
 
-	{% include "partials/_navbar.html" %}
-    
+		{% include "partials/_navbar.html" %}
+
 	</div>
 </div>
-<!-- Header End====================================================================== -->

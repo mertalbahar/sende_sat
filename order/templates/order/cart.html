@@ -2,161 +2,171 @@
 {% load static %}
 
 {% block content %}
-<h3>
-    ALIŞVERİŞ SEPETİ [ <small>{% if request.session.cart_items %}{{ request.session.cart_items }}{% else %}0{% endif %} ürün</small>]
-    <a href="{% url 'product' %}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Alışverişe devam et </a>
-</h3>
-<hr class="soft" />
+<div class="span9">
+    <h3>
+        ALIŞVERİŞ SEPETİ [ <small>{% if request.session.cart_items %}{{ request.session.cart_items }}{% else %}0{% endif %} ürün</small>]
+        <a href="{% url 'product' %}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Alışverişe devam
+            et </a>
+    </h3>
+    <hr class="soft" />
 
-{% if not user.is_authenticated %}
-<table class="table table-bordered">
-    <tr>
-        <th> ZATEN ÜYE MİSİNİZ? </th>
-    </tr>
-    <tr>
-        <td>
-            <form class="form-horizontal" method="POST" novalidate>
-                {% csrf_token %}
-
-                {% if error %}
-                <div class="alert alert-danger">
-                    {{ error }}
-                </div>
-                {% endif %}
- 
-                <div class="control-group">
-                    <label class="control-label" for="inputUsername">Kullanıcı Adı</label>
-                    <div class="controls">
-                        <input type="text" id="inputUsername" name="username" placeholder="Kullanıcı Adı">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputPassword1">Parola</label>
-                    <div class="controls">
-                        <input type="password" id="inputPassword1" name="password" placeholder="Parola">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="submit" class="btn">Giriş Yap</button> VEYA
-                        <a href="{% url 'user_register' %}" class="btn">Kayıt Ol</a>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <a href="forgetpass.html" style="text-decoration:underline">Forgot password ?</a>
-                    </div>
-                </div>
-            </form>
-        </td>
-    </tr>
-</table>
-{% endif %}
-
-<table class="table table-bordered">
-    <thead>
+    {% if not user.is_authenticated %}
+    <table class="table table-bordered">
         <tr>
-            <th>#</th>
-            <th>Ürün</th>
-            <th>Adet</th>
-            <th>Fiyat</th>
-            <th>Discount</th>
-            <th>KDV</th>
-            <th>Toplam</th>
+            <th> ZATEN ÜYE MİSİNİZ? </th>
         </tr>
-    </thead>
-    <tbody>
-        {% for item in cart %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>
-                <a href="{% url 'product_detail' item.product.category.slug item.product.slug %}" style="text-decoration: none;">
-                    <img width="60" src="{{ item.product.image.url }}" alt="{{ item.title }}" /> {{ item }}
-                </a>
-            </td>
-            <td>
-                <div class="input-append">
-                    <input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16" type="text" value="{{ item.quantity }}">
-                    <button class="btn" type="button"><i class="icon-minus"></i></button>
-                    <button class="btn" type="button"><i class="icon-plus"></i></button>
-                    <a href="{% url 'remove_cart' item.id %}" class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></a>
-                </div>
-            </td>
-            <td>{{ item.price|floatformat:2 }}</td>
-            <td>$25.00</td>
-            <td>$15.00</td>
-            <td>{{ item.subtotal|floatformat:2 }}</td>
-        </tr>
-        {% endfor %}
-
-        <tr>
-            <td colspan="6" style="text-align:right">Total Price: </td>
-            <td> $228.00</td>
-        </tr>
-        <tr>
-            <td colspan="6" style="text-align:right">Total Discount: </td>
-            <td> $50.00</td>
-        </tr>
-        <tr>
-            <td colspan="6" style="text-align:right">Total Tax: </td>
-            <td> $31.00</td>
-        </tr>
-        <tr>
-            <td colspan="6" style="text-align:right"><strong>TUTAR: </strong></td>
-            <td class="label label-important" style="display:block"> <strong> {{ total|floatformat:2 }} </strong></td>
-        </tr>
-    </tbody>
-</table>
-
-
-<table class="table table-bordered">
-    <tbody>
         <tr>
             <td>
-                <form class="form-horizontal">
+                <form class="form-horizontal" method="POST" novalidate>
+                    {% csrf_token %}
+
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
                     <div class="control-group">
-                        <label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
+                        <label class="control-label" for="inputUsername">Kullanıcı Adı</label>
                         <div class="controls">
-                            <input type="text" class="input-medium" placeholder="CODE">
-                            <button type="submit" class="btn"> ADD </button>
+                            <input type="text" id="inputUsername" name="username" placeholder="Kullanıcı Adı">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPassword1">Parola</label>
+                        <div class="controls">
+                            <input type="password" id="inputPassword1" name="password" placeholder="Parola">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn">Giriş Yap</button> VEYA
+                            <a href="{% url 'user_register' %}" class="btn">Kayıt Ol</a>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <a href="forgetpass.html" style="text-decoration:underline">Forgot password ?</a>
                         </div>
                     </div>
                 </form>
             </td>
         </tr>
+    </table>
+    {% endif %}
 
-    </tbody>
-</table>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Ürün</th>
+                <th>Adet</th>
+                <th>Fiyat</th>
+                <th>Discount</th>
+                <th>KDV</th>
+                <th>Toplam</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a href="{% url 'product_detail' item.product.category.slug item.product.slug %}"
+                        style="text-decoration: none;">
+                        <img width="60" src="{{ item.product.image.url }}" alt="{{ item.title }}" /> {{ item }}
+                    </a>
+                </td>
+                <td>
+                    <div class="input-append">
+                        <input class="span1" style="max-width:34px" placeholder="1" id="appendedInputButtons" size="16"
+                            type="text" value="{{ item.quantity }}">
+                        <button class="btn" type="button"><i class="icon-minus"></i></button>
+                        <button class="btn" type="button"><i class="icon-plus"></i></button>
+                        <a href="{% url 'remove_cart' item.id %}" class="btn btn-danger" type="button"><i
+                                class="icon-remove icon-white"></i></a>
+                    </div>
+                </td>
+                <td>{{ item.price|floatformat:2 }}</td>
+                <td>$25.00</td>
+                <td>$15.00</td>
+                <td>{{ item.subtotal|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
 
-<table class="table table-bordered">
-    <tr>
-        <th>ESTIMATE YOUR SHIPPING </th>
-    </tr>
-    <tr>
-        <td>
-            <form class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label" for="inputCountry">Country </label>
-                    <div class="controls">
-                        <input type="text" id="inputCountry" placeholder="Country">
+            <tr>
+                <td colspan="6" style="text-align:right">Total Price: </td>
+                <td> $228.00</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align:right">Total Discount: </td>
+                <td> $50.00</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align:right">Total Tax: </td>
+                <td> $31.00</td>
+            </tr>
+            <tr>
+                <td colspan="6" style="text-align:right"><strong>TUTAR: </strong></td>
+                <td class="label label-important" style="display:block"> <strong> {{ total|floatformat:2 }} </strong>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <td>
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label"><strong> VOUCHERS CODE: </strong> </label>
+                            <div class="controls">
+                                <input type="text" class="input-medium" placeholder="CODE">
+                                <button type="submit" class="btn"> ADD </button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>ESTIMATE YOUR SHIPPING </th>
+        </tr>
+        <tr>
+            <td>
+                <form class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label" for="inputCountry">Country </label>
+                        <div class="controls">
+                            <input type="text" id="inputCountry" placeholder="Country">
+                        </div>
                     </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputPost">Post Code/ Zipcode </label>
-                    <div class="controls">
-                        <input type="text" id="inputPost" placeholder="Postcode">
+                    <div class="control-group">
+                        <label class="control-label" for="inputPost">Post Code/ Zipcode </label>
+                        <div class="controls">
+                            <input type="text" id="inputPost" placeholder="Postcode">
+                        </div>
                     </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="submit" class="btn">ESTIMATE </button>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn">ESTIMATE </button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        </td>
-    </tr>
-</table>
-<a href="{% url 'product' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Alışverişe devam et </a>
-<a href="{% url 'order_product' %}" class="btn btn-large pull-right">Ödemeye geç <i class="icon-arrow-right"></i></a>
-<!-- MainBody End ============================= -->
+                </form>
+            </td>
+        </tr>
+    </table>
+    <a href="{% url 'product' %}" class="btn btn-large">
+        <i class="icon-arrow-left"></i> Alışverişe devam et
+    </a>
+    <a href="{% url 'order_product' %}" class="btn btn-large pull-right">
+        Ödemeye geç <i class="icon-arrow-right"></i>
+    </a>
+</div>
 {% endblock content %}

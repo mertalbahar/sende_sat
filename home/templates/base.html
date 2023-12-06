@@ -61,16 +61,15 @@
                 {% endblock sidebar %}
                 
                 <div class="span9">
-                    
-                    {% block breadcrumb %}
-                        {% include "partials/_breadcrumb.html" %}
-                    {% endblock breadcrumb %}
-
-                    {% block content %}
-                    
-                    {% endblock content %}
-
+                {% block breadcrumb %}
+                    {% include "partials/_breadcrumb.html" %}
+                {% endblock breadcrumb %}
                 </div>
+
+                {% block content %}
+                
+                {% endblock content %}
+
             </div>
         </div>
     </div>
