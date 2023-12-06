@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h3>
+    ÜRÜN GÜNCELLEME <a href="{% url 'user_products' %}" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Geri gel </a>
+</h3>
+<hr class="soft" />
+
+<div class="span1"> &nbsp;</div>
+<form class="form-horizontal" method="POST" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <div class="span8">
+        <h5>[ <span class="badge badge-info">{{ product }}</span> ] Ürününü Güncelle</h5>
+        <div class="well">
+            {% include "partials/_form.html" %}
+            {{ form.media }}
+        </div>
+    </div>
+
+    <a href="{% url 'user_products' %}" class="btn btn-large"><i class="icon-arrow-left"></i> Geri gel </a>
+    <button type="submit" class="btn btn-large btn-success pull-right">Güncelle <i class="icon-save"></i></button>
+</form>
+<!-- MainBody End ============================= -->
+{% endblock content %}

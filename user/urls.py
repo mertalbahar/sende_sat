@@ -10,4 +10,5 @@ urlpatterns = [
     path('password', views.user_password_change, name='user_password_change'),
     path('user_products', views.user_products, name='user_products'),
     path('user_add_product', views.user_add_product, name='user_add_product'),
+    path('user_update_product/<slug:slug>', views.user_update_product, name='user_update_product'),
 ]

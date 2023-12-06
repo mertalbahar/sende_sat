@@ -192,7 +192,7 @@ def user_add_product(request):
         
         else:
             messages.error(request, form.errors)
-            return redirect('user_add_product')
+            return render(request, 'user/user_add_product.html', {'form': form})
     
     form = UserProductForm
     
@@ -200,3 +200,35 @@ def user_add_product(request):
         'form': form
     }
     return render(request, 'user/user_add_product.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def user_update_product(request, slug):
+    product = Product.objects.get(user_id = request.user.id, slug = slug)
+    product_title = product.title
+    
+    if request.method == 'POST':
+        form = UserProductForm(request.POST, request.FILES, instance=product)
+        
+        if form.is_valid():
+            form.save()
+            
+            if product.title == product_title:
+                messages.success(request, f'{product_title} ürününüz güncellendi.')
+                return redirect('user_products')
+            
+            else:
+                messages.success(request, f'{product_title} ürününüz {product.title} olarak güncellendi.')
+                return redirect('user_products')
+        
+        else:
+            return render(request, 'user/user_update_product.html', {'form': form, 'product': product})
+    
+    form = UserProductForm(instance = product)
+    
+    context = {
+        'product': product,
+        'form': form
+    }
+    
+    return render(request, 'user/user_update_product.html', context)
