@@ -10,8 +10,12 @@
                 {% else %}
                 <a class="btn" href="{% url 'product_detail' prd.category.slug prd.slug %}"><i class="icon-zoom-in"></i></a>
                 {% endif %}
+                {% if prd.status == 'True' %}
                 <a class="btn" href="{% url 'add_cart' prd.id %}">Ekle <i class="icon-shopping-cart"></i></a>
                 <a class="btn btn-primary" href="#">{{ prd.price|floatformat:2 }}</a>
+                {% else %}
+                <p>Ürün yayında değil</p>
+                {% endif %}
             </h4>
         </div>
     </div>

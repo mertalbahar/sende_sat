@@ -38,6 +38,7 @@
         <h3>{{ product.title }}</h3>
         <small>- {{ product.keywords }}</small>
         <hr class="soft" />
+        {% if product.status == 'True' %}
         <form class="form-horizontal qtyFrm" action="{% url 'add_cart' product.id %}" method="POST">
             {% csrf_token %}
 
@@ -66,6 +67,9 @@
                 </div>
             </div>
         </form>
+        {% else %}
+        <h4>Ürün yayında değil</h4>
+        {% endif %}
         <hr class="soft clr" />
         <p>{{ product.description }}</p>
         <a class="btn btn-small pull-right" href="#detail">Daha Fazla</a>
