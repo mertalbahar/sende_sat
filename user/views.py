@@ -9,7 +9,7 @@ from django.core.validators import validate_email
 from django.core.paginator import Paginator
 
 from order.models import Cart
-from product.models import Category, Product
+from product.models import Comment, Product
 
 from .models import UserProfile
 from .forms import UserLoginForm, UserPasswordChangeForm, UserProductForm, UserProfileForm, UserRegisterForm, UserUpdateForm
@@ -232,3 +232,10 @@ def user_update_product(request, slug):
     }
     
     return render(request, 'user/user_update_product.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def user_comments(request):
+    comments = Comment.objects.filter(user_id = request.user.id)
+    
+    return render(request, 'user/user_comments.html', {'comments': comments})

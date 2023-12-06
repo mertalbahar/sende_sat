@@ -28,11 +28,13 @@ def product_detail(request, c_slug, p_slug):
     product = Product.objects.get(slug = p_slug)
     images = ProductImages.objects.filter(product = product)
     related_products = Product.objects.filter(category = product.category).exclude(slug = product.slug).exclude(status = False)
+    comments = Comment.objects.filter(product = product)
     
     context = {
         'product': product,
         'images': images,
-        'related_products': related_products
+        'related_products': related_products,
+        'comments': comments
     }
     
     return render(request, 'product/product_detail.html', context)

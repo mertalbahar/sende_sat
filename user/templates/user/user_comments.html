@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="span9">
+    <h3>ÜRÜN YORUMLARI</h3>
+    <hr class="soft" />
+
+    <div class="row">
+        <div class="span9">
+             <h5>{% comment %}[ <span class="badge badge-info">{% if comments %}{{ active_orders }}{% else %}0{% endif %}</span> ]{% endcomment %} Yorumlar</h5> 
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ürün</th>
+                            <th>Puan</th>
+                            <th>Konu</th>
+                            <th>Yorum</th>
+                            <th>Durumu</th>
+                            <th>Tarih</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for comment in comments %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ comment.product }}</td>
+                            <td>{{ comment.rate }}</td>
+                            <td>{{ comment.subject }}</td>
+                            <td>{{ comment.comment }}</td>
+                            <td>{{ comment.status }}</td>
+                            <td>{{ comment.created_at }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-sm" href="#">Güncelle</a>
+                                    <a class="btn btn-sm" href="#">Sil</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
