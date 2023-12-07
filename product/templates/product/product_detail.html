@@ -149,7 +149,21 @@
             <div class="tab-pane fade" id="comment">
                 <div class="row">
                     <div class="span5">
-                        <h4>Yorumlar</h4>
+                        <h4>
+                            Yorumlar <br />
+                            [
+                                {% for i in ratings %}
+                                <span class="badge badge-info">
+                                    {% with ''|center:i.rate as range %}
+                                    {% for _ in range %}
+                                    <span>&#10031;</span>
+                                    {% endfor %}
+                                    ({{ i.rate__count }})
+                                {% endwith %}
+                                </span>
+                                {% endfor %}
+                            ]
+                        </h4>
                         {% if comments %}
                             {% for comment in comments %}
                             <div style="display: inline;">

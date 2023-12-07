@@ -117,7 +117,7 @@ class Comment(models.Model):
     subject = models.CharField(max_length=50, verbose_name='Konu')
     comment = models.TextField(max_length=255, verbose_name='Yorum')
     rate = models.IntegerField(default=1)
-    status = models.CharField(max_length=10, choices=STATUS, default='New', verbose_name='Durum')
+    status = models.CharField(max_length=10, choices=STATUS, default='Yeni', verbose_name='Durum')
     ip = models.GenericIPAddressField()
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme')
