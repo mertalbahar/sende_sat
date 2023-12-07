@@ -237,5 +237,21 @@ def user_update_product(request, slug):
 @login_required(login_url=settings.LOGIN_URL)
 def user_comments(request):
     comments = Comment.objects.filter(user_id = request.user.id)
+    total_comments = comments.count()
+    pending_comments = comments.filter(status = 'Yeni').count()
     
-    return render(request, 'user/user_comments.html', {'comments': comments})
+    context = {
+        'comments': comments,
+        'total_comments': total_comments,
+        'pending_comments': pending_comments
+    }
+    
+    return render(request, 'user/user_comments.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def user_delete_comments(request, id):
+    Comment.objects.filter(user_id = request.user.id, id = id).delete()
+    messages.success(request, 'Yorumunuz silinmiştir.')
+    
+    return redirect('user_comments')

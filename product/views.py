@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
@@ -28,13 +29,15 @@ def product_detail(request, c_slug, p_slug):
     product = Product.objects.get(slug = p_slug)
     images = ProductImages.objects.filter(product = product)
     related_products = Product.objects.filter(category = product.category).exclude(slug = product.slug).exclude(status = False)
-    comments = Comment.objects.filter(product = product)
+    comments = Comment.objects.filter(product = product, status = 'Onaylandı')
+    ratings = comments.values('rate').annotate(Count('rate'))
     
     context = {
         'product': product,
         'images': images,
         'related_products': related_products,
-        'comments': comments
+        'comments': comments,
+        'ratings': ratings
     }
     
     return render(request, 'product/product_detail.html', context)
