@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="span2">
+        <img src="{{ fav.product.image.url }}" alt="{{ fav.product.title }}" />
+    </div>
+    <div class="span4">
+        {% if fav.product in latest_products and fav.product.status == 'True' %}
+        <h3>New | Available</h3>
+        <hr class="soft" />
+        {% endif %}
+        <h5>{{ fav.product.title }}</h5>
+        <p>{{ fav.product.description }}</p>
+        <a class="btn btn-small pull-right" href="{% url 'product_detail' fav.product.category.slug fav.product.slug %}">İncele</a>
+        <br class="clr" />
+    </div>
+    <div class="span3 alignR">
+        <form class="form-horizontal qtyFrm">
+            <h3>{{ fav.product.price|floatformat:2 }}</h3>
+            <label class="checkbox">
+                <input type="checkbox">Karşılaştır
+            </label>
+            <br />
+            {% if fav.product.status == 'True' %}
+            <a href="{% url 'add_cart' fav.product.id%}" class="btn btn-large btn-primary"> Ekle <i class=" icon-shopping-cart"></i></a>
+            {% else %}
+            <h4>Ürün yayında değil</h4>
+            {% endif %}
+            {% if fav.product.user_id == request.user.id %}
+            <a class="btn btn-large btn-warning" href="{% url 'user_update_product' fav.product.slug %}">Güncelle</a>
+            {% else %}
+            <a href="{% url 'product_detail' fav.product.category.slug fav.product.slug %}" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+            {% endif %}
+
+        </form>
+    </div>
+</div>
+<hr class="soft" />

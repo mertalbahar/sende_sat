@@ -22,12 +22,20 @@
 					<a href="product_summary.html"><span>&pound;</span></a>
 					<span class="btn btn-mini">$155.00</span>
 					<a href="product_summary.html"><span class="">$</span></a>
+					<a href="{% url 'user_favorite_products' %}">
+						<span class="btn btn-mini btn-warning">
+							<i class="icon-star icon-white"></i>
+							[ {% if request.session.favorite_items %}{{ request.session.favorite_items }}{% else %}0{% endif %}
+							] Favori
+						</span> 
+					</a>
 					<a href="{% url 'cart' %}">
 						<span class="btn btn-mini btn-primary">
 							<i class="icon-shopping-cart icon-white"></i>
 							[ {% if request.session.cart_items %}{{ request.session.cart_items }}{% else %}0{% endif %}
 							] Ürün
-						</span> </a>
+						</span> 
+					</a>
 				</div>
 			</div>
 		</div>

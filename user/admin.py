@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.models import User
 
-from .models import UserProfile
+from .models import FavoriteProduct, UserProfile
 
 
 class UserProfileInline(admin.StackedInline):
@@ -24,3 +24,9 @@ class AccountsUserAdmin(AuthUserAdmin):
     
 admin.site.unregister(User)
 admin.site.register(User, AccountsUserAdmin)
+
+
+@admin.register(FavoriteProduct)
+class FavoriteProductAdmin(admin.ModelAdmin):
+    list_display = ('product', 'user')
+    list_filter = ['user']

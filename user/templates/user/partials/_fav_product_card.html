@@ -1,0 +1,27 @@
+<li class="span3">
+    <div class="thumbnail">
+        <a href="{% url 'product_detail' fav.product.category.slug fav.product.slug %}">
+            <img src="{{ fav.product.image.url }}" style="height: 160px;" alt="{{ fav.product.title }}"/>
+        </a>
+        <a href="{% url 'remove_favorite' fav.product.id %}" style="text-decoration: none; position: absolute; top: 2px; right: -6px; font-size: 24px;">
+            <i class="icon-remove" style="color: orange;"></i>
+        </a>
+        <div class="caption">
+            <h5>{{ fav.product.title }}</h5>
+            <p>{{ fav.product.keywords|truncatechars:36 }}</p>
+            <h4 style="text-align:center">
+                {% if fav.product.user_id == request.user.id %}
+                <a class="btn btn-warning" href="{% url 'user_update_product' fav.product.slug %}">Güncelle</a>
+                {% else %}
+                <a class="btn" href="{% url 'product_detail' fav.product.category.slug fav.product.slug %}"><i class="icon-zoom-in"></i></a>
+                {% endif %}
+                {% if fav.product.status == 'True' %}
+                <a class="btn" href="{% url 'add_cart' fav.product.id %}">Ekle <i class="icon-shopping-cart"></i></a>
+                <a class="btn btn-primary" href="#">{{ fav.product.price|floatformat:2 }}</a>
+                {% else %}
+                <p>Ürün yayında değil</p>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+</li>
