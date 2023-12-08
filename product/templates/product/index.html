@@ -26,17 +26,30 @@
 	<br class="clr" />
 	<div class="tab-content">
 		<div class="tab-pane" id="listView">
-			{% for prd in page_obj.object_list %}
-			{% include "product/partials/_product_list.html" %}
-			{% endfor %}
+			{% if page_obj.object_list|length == 0 %}
+			<div class="alert alert-error" style="font-size: 20px; padding: 12px;">
+				<strong><span class="label label-info" style="font-size: 20px; padding: 8px;">{{ query }}</span></strong> arama sonucu ürün bulunamadı.
+			</div>
+			<hr class="soft"/>
+			{% else %}
+				{% for prd in page_obj.object_list %}
+					{% include "product/partials/_product_list.html" %}
+				{% endfor %}
+			{% endif %}
 		</div>
 
 		<div class="tab-pane  active" id="blockView">
+			{% if page_obj.object_list|length == 0 %}
+				<div class="alert alert-error" style="font-size: 20px; padding: 12px;">
+					<strong><span class="label label-info" style="font-size: 20px; padding: 8px;">{{ query }}</span></strong> arama sonucu ürün bulunamadı.
+				</div>
+			{% else %}
 			<ul class="thumbnails">
 				{% for prd in page_obj.object_list %}
-				{% include "product/partials/_product_card.html" %}
+					{% include "product/partials/_product_card.html" %}
 				{% endfor %}
 			</ul>
+			{% endif %}
 			<hr class="soft" />
 		</div>
 	</div>

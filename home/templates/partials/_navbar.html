@@ -10,14 +10,12 @@
         <a class="brand" href="{% url 'home' %}">
             <img src="{% static 'img/logo.png' %}" style="width: 120px;" alt="{{ setting.title }}" />
         </a>
-        <form class="form-inline navbar-search" name="search-form" method="POST" action="{% url 'search' %}">
-            {% csrf_token %}
-
+        <form class="form-inline navbar-search" method="GET" action="{% url 'search' %}">
             <input id="srchFld" class="srchTxt" name="query" type="text" />
-            <select class="srchTxt">
+            <select class="srchTxt" name="category">
                 <option>Kategoriler</option>
                 {% for cat in categories %}
-                <option>{{ cat.title }}</option>
+                <option value="{{cat.title}}">{{ cat.title }}</option>
                 {% endfor %}
             </select>
             <button type="submit" id="submitButton" class="btn btn-primary">Ara</button>
