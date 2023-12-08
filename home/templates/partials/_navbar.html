@@ -7,17 +7,20 @@
         <span class="icon-bar"></span>
     </a>
     <div class="navbar-inner">
-        <a class="brand" href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" style="width: 120px;"
-                alt="{{ setting.title }}" /></a>
-        <form class="form-inline navbar-search" method="post" action="products.html">
-            <input id="srchFld" class="srchTxt" type="text" />
+        <a class="brand" href="{% url 'home' %}">
+            <img src="{% static 'img/logo.png' %}" style="width: 120px;" alt="{{ setting.title }}" />
+        </a>
+        <form class="form-inline navbar-search" name="search-form" method="POST" action="{% url 'search' %}">
+            {% csrf_token %}
+
+            <input id="srchFld" class="srchTxt" name="query" type="text" />
             <select class="srchTxt">
                 <option>Kategoriler</option>
                 {% for cat in categories %}
                 <option>{{ cat.title }}</option>
                 {% endfor %}
             </select>
-            <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+            <button type="submit" id="submitButton" class="btn btn-primary">Ara</button>
         </form>
         <div class="nav-collapse pull-right">
             <ul id="topMenu" class="nav">

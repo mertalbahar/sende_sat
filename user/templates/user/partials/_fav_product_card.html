@@ -1,9 +1,9 @@
 <li class="span3">
-    <div class="thumbnail">
+    <div class="thumbnail" style="height: 350px;">
         <a href="{% url 'product_detail' fav.product.category.slug fav.product.slug %}">
             <img src="{{ fav.product.image.url }}" style="height: 160px;" alt="{{ fav.product.title }}"/>
         </a>
-        <a href="{% url 'remove_favorite' fav.product.id %}" style="text-decoration: none; position: absolute; top: 2px; right: -6px; font-size: 24px;">
+        <a href="{% url 'remove_favorite' fav.product.id %}" style="text-decoration: none; position: absolute; top: 2px; right: 0; font-size: 24px;">
             <i class="icon-remove" style="color: orange;"></i>
         </a>
         <div class="caption">

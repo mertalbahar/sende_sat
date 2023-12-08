@@ -1,7 +1,12 @@
 <div class="row">
     <div class="span2">
-        <img src="{{ fav.product.image.url }}" alt="{{ fav.product.title }}" />
-    </div>
+        <div style="position: relative;">
+            <img src="{{ fav.product.image.url }}" alt="{{ fav.product.title }}" />
+            <a href="{% url 'remove_favorite' fav.product.id %}" style="text-decoration: none; position: absolute; top: 2px; right: 0; font-size: 24px;">
+                <i class="icon-remove" style="color: orange;"></i>
+            </a>
+        </div>
+        </div>
     <div class="span4">
         {% if fav.product in latest_products and fav.product.status == 'True' %}
         <h3>New | Available</h3>
