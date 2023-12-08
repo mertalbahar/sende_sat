@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
@@ -104,6 +105,32 @@ class ProductImages(models.Model):
         return mark_safe('<img src="{}" height="50" />'.format(self.image.url))
     
     image_tag.short_description = 'Resim'
+
+
+class ProductDiscount(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Ürün')
+    discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], verbose_name='İndirim')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Oluşturulma')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Güncellenme')
+    
+    class Meta:
+        verbose_name = 'İndirim Ürün'
+        verbose_name_plural = 'İndirim Ürünler'
+    
+    def __str__(self):
+        return self.product.title
+    
+    @property
+    def price(self):
+        return self.product.price
+    
+    @property
+    def discounted_price(self):
+        return (self.product.price * self.discount) / 100
+    
+    @property
+    def sell_price(self):
+        return self.product.price - self.discounted_price
 
 
 class Comment(models.Model):

@@ -4,7 +4,7 @@ from .models import Cart, Order, OrderProduct
 
 
 @admin.register(Cart)
-class ShopCartAdmin(admin.ModelAdmin):
+class CartAdmin(admin.ModelAdmin):
     list_display = ( 'user_tag', 'product_tag', 'quantity', 'price', 'subtotal')
     list_filter = ['user']
 

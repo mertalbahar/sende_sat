@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="span9">
+	<h3> İNDİRİMLİ ÜRÜNLER <small class="pull-right"> {{ active_products }} ürün </small></h3>
+	<hr class="soft" />
+
+	<form class="form-horizontal span6">
+		<div class="control-group">
+			<label class="control-label alignL">Sort By </label>
+			<select>
+				<option>Priduct name A - Z</option>
+				<option>Priduct name Z - A</option>
+				<option>Priduct Stoke</option>
+				<option>Price Lowest first</option>
+			</select>
+		</div>
+	</form>
+
+	<div id="myTab" class="pull-right">
+		<a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
+		<a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
+	</div>
+	<br class="clr" />
+	<div class="tab-content">
+		<div class="tab-pane" id="listView">
+        {% for prd in page_obj.object_list %}
+            {% include "product/partials/_discount_list.html" %}
+        {% endfor %}
+		</div>
+
+		<div class="tab-pane  active" id="blockView">
+			<ul class="thumbnails">
+				{% for prd in page_obj.object_list %}
+					{% include "product/partials/_discount_card.html" %}
+				{% endfor %}
+			</ul>
+			<hr class="soft" />
+		</div>
+	</div>
+
+	<a href="compair.html" class="btn btn-large pull-right">Ürünleri Karşılaştır</a>
+
+	{% include "product/partials/_pagination.html" %}
+
+	<br class="clr" />
+</div>
+{% endblock content %}

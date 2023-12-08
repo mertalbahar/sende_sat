@@ -1,0 +1,25 @@
+<li class="span3">
+    <div class="thumbnail" style="height: 350px;">
+        <a  href="{% url 'product_detail' prd.product.category.slug prd.product.slug %}">
+            <img src="{{ prd.product.image.url }}" style="height: 160px;" alt="{{ prd.product.title }}"/>
+            <div style="position: absolute; top: 14%; left: 50%; transform: translate(-50%, -50%); rotate: -30deg; color: red; font-size: 40px; font-weight: bolder;">% {{ prd.discount }}</div>
+        </a>
+        <div class="caption">
+            <h5>{{ prd.product.title }}</h5>
+            <p>{{ prd.product.keywords|truncatechars:36 }}</p>
+            <h4 style="text-align:center">
+                {% if prd.product.user_id == request.user.id %}
+                <a class="btn btn-warning" href="{% url 'user_update_product' prd.product.slug %}">Güncelle</a>
+                {% else %}
+                <a class="btn" href="{% url 'product_detail' prd.product.category.slug prd.product.slug %}"><i class="icon-zoom-in"></i></a>
+                {% endif %}
+                {% if prd.product.status == 'True' %}
+                <a class="btn" href="{% url 'add_cart' prd.product.id %}">Ekle <i class="icon-shopping-cart"></i></a>
+                <a class="btn btn-primary" href="#">{{ prd.product.price|floatformat:2 }}</a>
+                {% else %}
+                <p>Ürün yayında değil</p>
+                {% endif %}
+            </h4>
+        </div>
+    </div>
+</li>

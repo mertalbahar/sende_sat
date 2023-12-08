@@ -5,8 +5,7 @@
 <div class="row">
     <div id="gallery" class="span3">
         <a href="{{ product.image.url }}" title="{{ product.title }}">
-            <img src="{{ product.image.url }}" style="width:100%"
-                alt="{{ product.title }}" />
+            <img src="{{ product.image.url }}" style="width:100%" alt="{{ product.title }}" />
         </a>
         <div id="differentview" class="moreOptopm carousel slide">
             <div class="carousel-inner">
@@ -46,6 +45,10 @@
                 <i class="icon-star-empty" style="color: orange;"></i>
             </a>
             {% endif %}
+            
+            {% if discount %}
+            <div class="pull-right">% {{ discount.discount }} indirim!</div>
+            {% endif %}
         </h3>
         <small>- {{ product.keywords }}</small>
         <hr class="soft" />
@@ -54,7 +57,12 @@
             {% csrf_token %}
 
             <div class="control-group">
+                {% if discount %}
+                <label class="control-label"><span><del>{{ product.price|floatformat:2 }}</del></span></label>
+                <label class="control-label"><span>{{ discount.sell_price|floatformat:2 }}</span></label>
+                {% else %}
                 <label class="control-label"><span>{{ product.price|floatformat:2 }}</span></label>
+                {% endif %}
                 <div class="controls">
                     <input type="number" class="span1" name="quantity" placeholder="Adet" value="1" max="{{ product.quantity }}" />
                     <button type="submit" class="btn btn-large btn-primary pull-right">Sepete Ekle <i

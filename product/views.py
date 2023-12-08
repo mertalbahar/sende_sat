@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from user.models import FavoriteProduct
 
 from .forms import CommentForm
-from .models import Category, Comment, Product, ProductImages
+from .models import Category, Comment, Product, ProductDiscount, ProductImages
 
 
 def index(request):
@@ -33,6 +33,11 @@ def product_detail(request, c_slug, p_slug):
     comments = Comment.objects.filter(product = product, status = 'Onaylandı')
     ratings = comments.values('rate').annotate(Count('rate'))
     favorites = FavoriteProduct.objects.filter(user_id = request.user.id, product = product)
+    discount = ProductDiscount.objects.filter(product = product)
+    
+    if discount:
+        discount = discount.get(product = product)
+        
     
     context = {
         'product': product,
@@ -40,7 +45,8 @@ def product_detail(request, c_slug, p_slug):
         'related_products': related_products,
         'comments': comments,
         'ratings': ratings,
-        'favorites': favorites
+        'favorites': favorites,
+        'discount': discount
     }
     
     return render(request, 'product/product_detail.html', context)
@@ -68,6 +74,21 @@ def category_products(request, c_slug):
     }
     
     return render(request, 'product/index.html', context)
+
+
+def discount_products(request):
+    products = ProductDiscount.objects.all().order_by('-discount')
+    paginator = Paginator(products, 6)
+    page = request.GET.get('page', 1)
+    page_obj = paginator.page(page)
+    active_products = products.count()
+    
+    context = {
+        'page_obj': page_obj,
+        'active_products': active_products
+    }
+    
+    return render(request, 'product/special_offer.html', context)
 
 
 def search(request):

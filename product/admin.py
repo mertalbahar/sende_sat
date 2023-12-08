@@ -1,8 +1,11 @@
+from typing import Any
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http.request import HttpRequest
 
 from mptt.admin import DraggableMPTTAdmin
 
-from .models import Category, Comment, ProductImages, Product
+from .models import Category, Comment, ProductDiscount, ProductImages, Product
 
 
 @admin.register(Category)    
@@ -61,6 +64,11 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(ProductImages)
 class ImagesAdmin(admin.ModelAdmin):
     list_display = ('title', 'image_tag')
+
+
+@admin.register(ProductDiscount)
+class ProductDiscountAdmin(admin.ModelAdmin):
+    list_display = ('product', 'price', 'discount', 'sell_price')
 
 
 @admin.register(Comment)
