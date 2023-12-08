@@ -23,7 +23,7 @@
         <div class="nav-collapse pull-right">
             <ul id="topMenu" class="nav">
                 <li class=""><a href="{% url 'product' %}">Ürünler</a></li>
-                <li class=""><a href="special_offer.html">Specials Offer</a></li>
+                <li class=""><a href="{% url 'discount_products' %}">İndirimli Ürünler</a></li>
                 <li class=""><a href="normal.html">Delivery</a></li>
                 <li class=""><a href="{% url 'contact' %}">İletişim</a></li>
                 {% if user.is_authenticated %}
