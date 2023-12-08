@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from user.models import FavoriteProduct
 
-from .forms import CommentForm
+from .forms import CommentForm, SearchForm
 from .models import Category, Comment, Product, ProductImages
 
 
@@ -19,7 +19,6 @@ def index(request):
     active_products = products.count()
     
     context = {
-        'products': products,
         'page_obj': page_obj,
         'active_products': active_products
     }
@@ -64,12 +63,32 @@ def category_products(request, c_slug):
     page_obj = paginator.page(page)
     
     context = {
-        'products': products,
         'page_obj': page_obj,
         'active_products': active_products
     }
     
     return render(request, 'product/index.html', context)
+
+
+def search(request):
+    url = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            products = Product.objects.filter(title__icontains = query)
+            paginator = Paginator(products, 6)
+            page = request.GET.get('page', 1)
+            page_obj = paginator.page(page)
+            
+            return render(request, 'product/index.html', {'page_obj': page_obj})
+        
+        return redirect(url)
+    
+    return redirect(url)
+        
+    
 
 
 @login_required(login_url=settings.LOGIN_URL)
