@@ -5,6 +5,8 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from user.models import FavoriteProduct
+
 from .forms import CommentForm
 from .models import Category, Comment, Product, ProductImages
 
@@ -31,13 +33,15 @@ def product_detail(request, c_slug, p_slug):
     related_products = Product.objects.filter(category = product.category).exclude(slug = product.slug).exclude(status = False)
     comments = Comment.objects.filter(product = product, status = 'Onaylandı')
     ratings = comments.values('rate').annotate(Count('rate'))
+    favorites = FavoriteProduct.objects.filter(user_id = request.user.id, product = product)
     
     context = {
         'product': product,
         'images': images,
         'related_products': related_products,
         'comments': comments,
-        'ratings': ratings
+        'ratings': ratings,
+        'favorites': favorites
     }
     
     return render(request, 'product/product_detail.html', context)
@@ -52,7 +56,7 @@ def category_products(request, c_slug):
     children = Category.objects.add_related_count(node.get_children(), Product, 'category', 'product_counts')
     
     for i in children:
-        a = list(Product.objects.filter(category__slug = i.slug))
+        a = list(Product.objects.filter(category__slug = i.slug, status = True))
         products.extend(a)
         
     paginator = Paginator(products, 6)

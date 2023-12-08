@@ -42,7 +42,6 @@ def order_detail(request, id):
     return render(request, 'order/order_detail.html', context)
 
 
-@login_required(login_url=settings.LOGIN_URL)
 def cart(request):
     cart = Cart.objects.filter(user_id = request.user.id)
         

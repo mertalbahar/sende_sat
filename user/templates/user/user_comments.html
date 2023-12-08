@@ -44,7 +44,7 @@
                         <td>{{ comment.status }}</td>
                         <td>{{ comment.created_at }}</td>
                         <td>
-                            <a class="btn btn-sm" href="{% url 'user_delete_comments' comment.id %}" onclick="return confirm('Yorumunuz silinecektir! Emin misiniz?')">Sil</a>
+                            <a class="btn btn-sm" href="{% url 'user_delete_comment' comment.id %}" onclick="return confirm('Yorumunuz silinecektir! Emin misiniz?')">Sil</a>
                         </td>
                     </tr>
                     {% endfor %}

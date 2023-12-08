@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 from order.models import Cart
 from product.models import Comment, Product
 
-from .models import UserProfile
+from .models import FavoriteProduct, UserProfile
 from .forms import UserLoginForm, UserPasswordChangeForm, UserProductForm, UserProfileForm, UserRegisterForm, UserUpdateForm
 
 
@@ -43,6 +43,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 request.session['cart_items'] = Cart.objects.filter(user_id = request.user.id).count()
+                request.session['favorite_items'] = FavoriteProduct.objects.filter(user_id = request.user.id).count()
                 messages.add_message(request, messages.SUCCESS, 'Başarılı bir şekilde oturum açtınız.')
                 next_url = request.GET.get('next', None)
                 
@@ -250,8 +251,55 @@ def user_comments(request):
 
 
 @login_required(login_url=settings.LOGIN_URL)
-def user_delete_comments(request, id):
+def user_delete_comment(request, id):
     Comment.objects.filter(user_id = request.user.id, id = id).delete()
     messages.success(request, 'Yorumunuz silinmiştir.')
     
     return redirect('user_comments')
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def user_favorite_products(request):
+    favorites = FavoriteProduct.objects.filter(user_id = request.user.id)
+    paginator = Paginator(favorites, 9)
+    page = request.GET.get('page', 1)
+    page_obj = paginator.page(page)
+    
+    context = {
+        'favorites': favorites,
+        'page_obj': page_obj
+    }
+    
+    return render(request, 'user/favorite_products.html', context)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def add_favorite(request, id):
+    url = request.META.get('HTTP_REFERER')
+    product = Product.objects.get(id = id)
+    favorite_product = FavoriteProduct.objects.filter(user_id = request.user.id, product = product)
+    
+    if favorite_product.exists():
+        messages.info(request, 'Ürün zaten favorilerde mevcut.')
+        
+        return redirect(url)
+    
+    else:
+        data = FavoriteProduct()
+        data.user_id = request.user.id
+        data.product_id = id
+        data.save()
+        request.session['favorite_items'] = FavoriteProduct.objects.filter(user_id = request.user.id).count()
+        messages.success(request, 'Ürün favorilere eklendi.')
+        
+        return redirect(url)
+
+
+@login_required(login_url=settings.LOGIN_URL)
+def remove_favorite(request, id):
+    url = request.META.get('HTTP_REFERER')
+    FavoriteProduct.objects.filter(user_id = request.user.id, product_id = id).delete()
+    request.session['favorite_items'] = FavoriteProduct.objects.filter(user_id = request.user.id).count()
+    messages.success(request, 'Ürün favorilerden kaldırıldı.')
+    
+    return redirect(url)

@@ -4,6 +4,8 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
+from product.models import Product
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -29,3 +31,15 @@ class UserProfile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user = instance)
+
+
+class FavoriteProduct(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='Kullanıcı')
+    product = models.ForeignKey(Product,on_delete=models.SET_NULL, null=True, verbose_name='Ürün')
+    
+    class Meta:
+        verbose_name = 'Favori Ürün'
+        verbose_name_plural = 'Favori Ürünler'
+    
+    def __str__(self):
+        return self.product.title

@@ -35,7 +35,18 @@
         </div>
     </div>
     <div class="span6">
-        <h3>{{ product.title }}</h3>
+        <h3>
+            {{ product.title }}
+            {% if favorites %}
+            <a href="{% url 'remove_favorite' product.id %}" style="text-decoration: none;">
+                <i class="icon-star" style="color: orange;"></i>
+            </a>
+            {% else %}
+            <a href="{% url 'add_favorite' product.id %}" style="text-decoration: none;">
+                <i class="icon-star-empty" style="color: orange;"></i>
+            </a>
+            {% endif %}
+        </h3>
         <small>- {{ product.keywords }}</small>
         <hr class="soft" />
         {% if product.status == 'True' %}
@@ -53,7 +64,13 @@
         </form>
 
         <hr class="soft" />
-        <h4>{{ product.quantity }} items in stock</h4>
+        <h4>
+            {% if product.quantity <= 3 %}
+            Son {{ product.quantity }} ürün!
+            {% else %}
+            {{ product.quantity }} ürün stokta
+            {% endif %}
+        </h4>
         <form class="form-horizontal qtyFrm pull-right">
             <div class="control-group">
                 <label class="control-label"><span>Color</span></label>
@@ -151,6 +168,7 @@
                     <div class="span5">
                         <h4>
                             Yorumlar <br />
+                            {% if ratings %}
                             [
                                 {% for i in ratings %}
                                 <span class="badge badge-info">
@@ -163,6 +181,7 @@
                                 </span>
                                 {% endfor %}
                             ]
+                            {% endif %}
                         </h4>
                         {% if comments %}
                             {% for comment in comments %}
